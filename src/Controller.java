@@ -1,0 +1,80 @@
+import java.util.ArrayList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import java.io.*;
+
+public class Controller {
+    @FXML
+    private TextField loginRegister,passwordRegister;
+    @FXML
+    private Label registerMessage,registerMessage1;
+    
+    protected static ArrayList<String> passwordBD = new ArrayList<>();
+    protected static ArrayList<String> loginBD = new ArrayList<>();
+    
+    public void login(){
+        System.out.println("INCA NU FACE NIMIC");
+        
+    }
+    
+    public void forgotPassword(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("fgpassword.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void createNewAccount(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("register.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void loginPage(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void register(ActionEvent event) throws IOException{
+        String l = loginRegister.getText();
+        String p = passwordRegister.getText();
+        File file = new File("src\\BD.txt");
+        FileWriter fout = new FileWriter(file,true);
+
+        int k = 0;
+        for(int i = 0; i < loginBD.size(); i++){
+            if(loginBD.get(i).equals(l)){
+                k++;
+            }
+        }
+
+        if(k == 0){
+            registerMessage1.setStyle("-fx-text-fill: green;");
+            registerMessage.setStyle("-fx-text-fill: transparent;");
+            
+            loginBD.add(l);
+            passwordBD.add(p);
+            fout.write("\n"+l+" "+p);
+        }
+        else{
+            registerMessage.setStyle("-fx-text-fill: red;");
+            registerMessage1.setStyle("-fx-text-fill: transparent;");
+            System.out.println("EROARE LOGINUL DEJA EXISTA");
+        }
+        
+        k = 0;
+        
+        
+        fout.close();
+    }
+
+
+
+}
