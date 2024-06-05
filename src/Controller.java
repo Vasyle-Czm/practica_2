@@ -12,16 +12,29 @@ import java.io.*;
 
 public class Controller {
     @FXML
-    private TextField loginRegister,passwordRegister;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin;
     @FXML
-    private Label registerMessage,registerMessage1;
-    
+    private Label registerMessage,registerMessage1,loginMessage;
     protected static ArrayList<String> passwordBD = new ArrayList<>();
     protected static ArrayList<String> loginBD = new ArrayList<>();
-    
-    public void login(){
-        System.out.println("INCA NU FACE NIMIC");
-        
+
+
+    public void login(ActionEvent event) throws IOException{
+        boolean k = false;
+        for(int i=0;i<loginBD.size();i++){
+            if(loginBD.get(i).equals(loginLogin.getText()) && passwordBD.get(i).equals(passwordLogin.getText())){
+                k = true;
+                break;
+            }
+        }
+        if(k == false){
+            loginMessage.setStyle("-fx-text-fill: red;");
+        }
+        else{
+            Parent t1 = FXMLLoader.load(getClass().getResource("sample.fxml"));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(t1));
+        }
     }
     
     public void forgotPassword(ActionEvent event) throws IOException{
@@ -73,6 +86,10 @@ public class Controller {
         
         
         fout.close();
+    }
+
+    public void test(){
+        System.out.println("DEBUG");
     }
 
 

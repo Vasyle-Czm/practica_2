@@ -8,11 +8,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <PasswordField layoutX="226.0" layoutY="174.0" />
-      <TextField layoutX="226.0" layoutY="145.0" />
+      <PasswordField fx:id="passwordLogin" layoutX="226.0" layoutY="174.0" />
+      <TextField fx:id="loginLogin" layoutX="226.0" layoutY="145.0" />
       <Button layoutX="226.0" layoutY="232.0" mnemonicParsing="false" onAction="#forgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -31,6 +30,11 @@
       <Label layoutX="197.0" layoutY="28.0" text="Logare">
          <font>
             <Font size="68.0" />
+         </font>
+      </Label>
+      <Label fx:id="loginMessage" layoutX="250.0" layoutY="212.0" style="-fx-text-fill: transparent;" text="Parola sau Login gresit" textFill="RED">
+         <font>
+            <Font size="10.0" />
          </font>
       </Label>
    </children>

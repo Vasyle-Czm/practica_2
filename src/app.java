@@ -10,7 +10,7 @@ import javafx.fxml.*;
 
 
 public class app extends Application{
-    public Parent register,login;
+    public static Parent register,login;
     @Override
     public void start(Stage primaryStage) throws Exception {
         Label l1 = new Label("Enter the login:");
@@ -27,6 +27,9 @@ public class app extends Application{
 
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
+
+        //Controller a = new Controller(primaryStage);
+
     }
 
     public static void input() throws FileNotFoundException{
