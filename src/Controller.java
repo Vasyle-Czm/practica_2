@@ -22,20 +22,30 @@ public class Controller {
 
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
-        for(int i=0;i<loginBD.size();i++){
-            if(loginBD.get(i).equals(loginLogin.getText()) && passwordBD.get(i).equals(passwordLogin.getText())){
-                k = true;
-                break;
-            }
-        }
-        if(k == false){
-            loginMessage.setStyle("-fx-text-fill: red;");
-        }
-        else{
-            Parent t1 = FXMLLoader.load(getClass().getResource("app.fxml"));
+        
+        
+        
+        if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(true);
-            stage.setScene(new Scene(t1));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("managerApp.fxml"))));
+        }
+        else{
+            for(int i=0;i<loginBD.size();i++){
+                if(loginBD.get(i).equals(loginLogin.getText()) && passwordBD.get(i).equals(passwordLogin.getText())){
+                    k = true;
+                    break;
+                }
+            }
+            if(k == false){
+                loginMessage.setStyle("-fx-text-fill: red;");
+            }
+            else{
+                Parent t1 = FXMLLoader.load(getClass().getResource("app.fxml"));
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                stage.setResizable(true);
+                stage.setScene(new Scene(t1));
+            }
         }
     }
     
