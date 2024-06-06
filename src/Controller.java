@@ -15,6 +15,7 @@ public class Controller {
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin;
     @FXML
     private Label registerMessage,registerMessage1,loginMessage;
+    
     protected static ArrayList<String> passwordBD = new ArrayList<>();
     protected static ArrayList<String> loginBD = new ArrayList<>();
 
@@ -31,8 +32,9 @@ public class Controller {
             loginMessage.setStyle("-fx-text-fill: red;");
         }
         else{
-            Parent t1 = FXMLLoader.load(getClass().getResource("sample.fxml"));
+            Parent t1 = FXMLLoader.load(getClass().getResource("app.fxml"));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setResizable(true);
             stage.setScene(new Scene(t1));
         }
     }

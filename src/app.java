@@ -25,12 +25,11 @@ public class App extends Application{
         login = FXMLLoader.load(getClass().getResource("login.fxml"));
         register = FXMLLoader.load(getClass().getResource("register.fxml"));
 
-
+        primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
 
         //Controller a = new Controller(primaryStage);
-
     }
 
     public static void input() throws FileNotFoundException{
