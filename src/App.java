@@ -22,8 +22,8 @@ public class App extends Application{
         VBox vb = new VBox(10);
         vb.getChildren().addAll(l1,t1,l2,t2);
 
-        login = FXMLLoader.load(getClass().getResource("login.fxml"));
-        register = FXMLLoader.load(getClass().getResource("register.fxml"));
+        login = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
+        register = FXMLLoader.load(getClass().getResource("Interface\\register.fxml"));
 
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(login));
@@ -33,7 +33,7 @@ public class App extends Application{
     }
 
     public static void input() throws FileNotFoundException{
-        Scanner in = new Scanner(new File("src\\BD.txt"));
+        Scanner in = new Scanner(new File("src\\Database\\BD.txt"));
 
         while(in.hasNextLine()){
             Controller.loginBD.add(in.next());

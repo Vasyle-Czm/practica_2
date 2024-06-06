@@ -28,7 +28,7 @@ public class Controller {
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(true);
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("managerApp.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));
         }
         else{
             for(int i=0;i<loginBD.size();i++){
@@ -41,7 +41,7 @@ public class Controller {
                 loginMessage.setStyle("-fx-text-fill: red;");
             }
             else{
-                Parent t1 = FXMLLoader.load(getClass().getResource("app.fxml"));
+                Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 stage.setResizable(true);
                 stage.setScene(new Scene(t1));
@@ -50,19 +50,19 @@ public class Controller {
     }
     
     public void forgotPassword(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("fgpassword.fxml"));
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\fgpassword.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(t1));
     }
 
     public void createNewAccount(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("register.fxml"));
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\register.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(t1));
     }
 
     public void loginPage(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(t1));
     }
@@ -70,7 +70,7 @@ public class Controller {
     public void register(ActionEvent event) throws IOException{
         String l = loginRegister.getText();
         String p = passwordRegister.getText();
-        File file = new File("src\\BD.txt");
+        File file = new File("src\\Database\\BD.txt");
         FileWriter fout = new FileWriter(file,true);
 
         int k = 0;
