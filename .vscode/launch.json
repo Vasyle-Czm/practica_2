@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "app",
+            "mainClass": "App",
             "vmArgs": "--module-path lib/ --add-modules javafx.controls,javafx.fxml",
             "args": ""
         }

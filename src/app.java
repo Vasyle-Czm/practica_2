@@ -8,8 +8,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 
+// https://www.youtube.com/watch?v=TVLq9iSpuMs
 
-public class app extends Application{
+public class App extends Application{
     public static Parent register,login;
     @Override
     public void start(Stage primaryStage) throws Exception {

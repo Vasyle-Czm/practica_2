@@ -81,10 +81,7 @@ public class Controller {
             registerMessage1.setStyle("-fx-text-fill: transparent;");
             System.out.println("EROARE LOGINUL DEJA EXISTA");
         }
-        
         k = 0;
-        
-        
         fout.close();
     }
 
