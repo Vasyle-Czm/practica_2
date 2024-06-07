@@ -1,24 +1,34 @@
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.*;
+import java.net.URL;
 
-public class Controller {
+// ListView
+// https://www.youtube.com/watch?v=Pqfd4hoi5cc&list=PLZPZq0r_RZOM-8vJA3NQFZB7JroDcMwev&index=21
+
+
+public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin;
     @FXML
     private Label registerMessage,registerMessage1,loginMessage;
-    
+    @FXML
+    private ListView<String> myListView;
+
     protected static ArrayList<String> passwordBD = new ArrayList<>();
     protected static ArrayList<String> loginBD = new ArrayList<>();
-
 
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
@@ -29,6 +39,9 @@ public class Controller {
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(true);
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));
+            // String[] users = {"user1","user2"};
+            // System.out.println("myListView este null: " + (myListView == null));
+            
         }
         else{
             for(int i=0;i<loginBD.size();i++){
@@ -101,6 +114,12 @@ public class Controller {
         System.out.println("DEBUG");
     }
 
-
+    
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // myListView.getItems().add("users");
+        
+    }
 
 }
