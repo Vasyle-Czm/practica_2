@@ -21,16 +21,22 @@ prețul din lei în EURO sau de calculat durata deplasării). Adăugați cel pu�
 (unul trebuie să fie fără parametri, altul- cu toți parametrii indicați, iar al treilea- cu doar câțiva
 parametri indicați, în dependență de temă, în ultimul caz unele câmpuri ar putea avea valori egale sau
 careva valori standarde).
+
 • Clase care moștenesc câmpurile și metodele clasei părinte vor avea proprietăți proprii, creând și
 constructorii respectivi (care să corespundă constructorilor clasei de bază). Folosiți relațiile de asociere
 și agregare între obiecte (acolo unde este cazul).
+
 • Creați o clasă abstractă și o interfață, care are cel puțin o metodă abstractă, apoi le utilizează în procesul
 de moștenire și o realizează pe deplin. Fiecare clasă trebuie să conțină constructori supraîncărcați,
 metoda toString() supradefinită
+
 • Prelucrați diferite tipuri de excepție (atunci când avem împărțire la zero, radical din număr negativ,
 când încercăm să accesăm un element inexistent al unui tablou, atunci când în loc de număr utilizatorul
 introduce litere, atunci când încercăm să apelăm o metodă a unui obiect care are referință nulă etc.) O
 metodă care generează excepție proprie.
+
 • Înscrieți obiectele într-o listă, minim 20 de înregistrări. Se va utiliza lista și la afișarea pe ecran.
+
 • Programul să conțină un meniu minimalizat.
+
 • Adăugați clase și / sau membri sau metode la clasele dacă se consideră necesar.
