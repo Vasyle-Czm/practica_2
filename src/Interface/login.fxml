@@ -26,14 +26,14 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <PasswordField fx:id="passwordLogin" layoutX="226.0" layoutY="60.0">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding></PasswordField>
-            <TextField fx:id="loginLogin" layoutX="226.0" layoutY="25.0">
+            <TextField fx:id="loginLogin" layoutX="226.0" layoutY="25.0" promptText="Email or User name">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></TextField>
+            <PasswordField fx:id="passwordLogin" layoutX="226.0" layoutY="60.0" promptText="Password">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></PasswordField>
             <Label fx:id="loginMessage" layoutX="244.0" layoutY="92.0" style="-fx-text-fill: transparent;" text="Parola sau Login gresit" textFill="RED">
                <font>
                   <Font size="10.0" />
@@ -46,21 +46,21 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <Button layoutX="225.0" layoutY="4.0" mnemonicParsing="false" onAction="#forgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button layoutX="273.0" layoutY="36.0" mnemonicParsing="false" onAction="#login" style="-fx-border-radius: 100; -fx-border-color: black; -fx-background-color: transparent;" text="Login">
+            <Button layoutX="273.0" layoutY="40.0" mnemonicParsing="false" onAction="#login" style="-fx-border-radius: 100; -fx-border-color: black; -fx-background-color: transparent;" text="Login">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button layoutX="225.0" layoutY="4.0" mnemonicParsing="false" onAction="#forgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,20 +22,18 @@ import java.net.URL;
 
 public class Controller implements Initializable{
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel;
     @FXML
-    private ListView<String> myListView;
+    private ListView<String> myListView = new ListView<>();
 
     protected static ArrayList<String> passwordBD = new ArrayList<>();
     protected static ArrayList<String> loginBD = new ArrayList<>();
 
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
-        
-        
-        
+
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(true);
@@ -83,9 +82,8 @@ public class Controller implements Initializable{
     public void register(ActionEvent event) throws IOException{
         String l = loginRegister.getText();
         String p = passwordRegister.getText();
-        File file = new File("src\\Database\\BD.txt");
-        FileWriter fout = new FileWriter(file,true);
-
+        FileWriter fout = new FileWriter(new File("src\\Database\\accounts.txt"),true);
+        FileWriter dout = new FileWriter(new File("src\\Database\\details.txt"),true);
         int k = 0;
         for(int i = 0; i < loginBD.size(); i++){
             if(loginBD.get(i).equals(l)){
@@ -100,6 +98,7 @@ public class Controller implements Initializable{
             loginBD.add(l);
             passwordBD.add(p);
             fout.write("\n"+l+" "+p);
+            dout.write("\n"+userName.getText()+" "+firstName.getText()+" "+lastName.getText()+"\n");
         }
         else{
             registerMessage.setStyle("-fx-text-fill: red;");
@@ -108,18 +107,25 @@ public class Controller implements Initializable{
         }
         k = 0;
         fout.close();
+        dout.close();
     }
 
     public void test(){
         System.out.println("DEBUG");
     }
 
-    
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // myListView.getItems().add("users");
-        
+        String[] c = {"user1","user2","user3"};
+        myListView.getItems().addAll(c);
+        myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                myLabel.setText(myListView.getSelectionModel().getSelectedItem());
+            }
+            
+        });
     }
 
 }

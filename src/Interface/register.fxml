@@ -10,20 +10,24 @@
 
 <Pane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <Label layoutX="216.0" layoutY="85.0" text="Register">
+      <Label layoutX="223.0" layoutY="28.0" text="Register">
          <font>
             <Font size="47.0" />
          </font>
       </Label>
-      <PasswordField fx:id="passwordRegister" layoutX="230.0" layoutY="218.0" />
-      <TextField fx:id="loginRegister" layoutX="230.0" layoutY="183.0" />
-      <Button fx:id="register" layoutX="278.0" layoutY="291.0" mnemonicParsing="false" onAction="#register" text="Register" />
+      <TextField fx:id="loginRegister" layoutX="233.0" layoutY="127.0" promptText="Email" />
+      <TextField fx:id="userName" layoutX="233.0" layoutY="160.0" promptText="User name" />
+      <TextField fx:id="firstName" layoutX="233.0" layoutY="195.0" promptText="FIrst name" />
+      <TextField fx:id="lastName" layoutX="233.0" layoutY="230.0" promptText="Last name" />
+      <PasswordField fx:id="passwordRegister" layoutX="233.0" layoutY="264.0" promptText="Password" />
+      <Button fx:id="register" layoutX="278.0" layoutY="330.0" mnemonicParsing="false" onAction="#register" text="Register" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginPage" style="-fx-background-color: transparent; -fx-border-radius: 100; -fx-border-color: black; -fx-border-width: 1;" text="Login Page">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="registerMessage" layoutX="248.0" layoutY="222.0" style="-fx-text-fill: transparent;" text="Utilizatorul deja exista" textFill="RED" />
-      <Label fx:id="registerMessage1" layoutX="252.0" layoutY="222.0" style="-fx-text-fill: transparent;" text="Cont creat cu succes" textFill="#05ff00" />
+      <Label fx:id="registerMessage" layoutX="249.0" layoutY="301.0" style="-fx-text-fill: transparent;" text="Utilizatorul deja exista" textFill="RED" />
+      <Label fx:id="registerMessage1" layoutX="253.0" layoutY="299.0" style="-fx-text-fill: transparent;" text="Cont creat cu succes" textFill="#05ff00" />
+      <Label fx:id="notNull" layoutX="207.0" layoutY="299.0" style="-fx-text-fill: transparent;" text="Toate campurile trebuie sa fie pline" textFill="RED" />
    </children>
 </Pane>

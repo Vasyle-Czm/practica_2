@@ -28,18 +28,18 @@ public class App extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
-
-        //Controller a = new Controller(primaryStage);
     }
 
     public static void input() throws FileNotFoundException{
-        Scanner in = new Scanner(new File("src\\Database\\BD.txt"));
-
-        while(in.hasNextLine()){
+        Scanner in = new Scanner(new File("src\\Database\\accounts.txt"));
+        
+        
+        while(in.hasNext()){
             Controller.loginBD.add(in.next());
             Controller.passwordBD.add(in.next());
         }
         in.close();
+        
 
         // System.out.println("Lista de loginuri");
         // for(String a : Controller.loginBD){
