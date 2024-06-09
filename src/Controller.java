@@ -98,7 +98,7 @@ public class Controller implements Initializable{
             loginBD.add(l);
             passwordBD.add(p);
             fout.write("\n"+l+" "+p);
-            dout.write("\n"+userName.getText()+" "+firstName.getText()+" "+lastName.getText()+"\n");
+            dout.write("\n"+userName.getText()+" "+firstName.getText()+" "+lastName.getText());
         }
         else{
             registerMessage.setStyle("-fx-text-fill: red;");
