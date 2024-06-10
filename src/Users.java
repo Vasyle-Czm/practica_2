@@ -10,9 +10,9 @@ public class Users {
         this.prenume = prenume;
         this.email = email;
         this.parola = parola;
-        creationDate = new SimpleDateFormat("dd-MM-yyyy/HH:mm").format(new Date());
+        creationDate = new SimpleDateFormat("dd-MM-yyyy|HH:mm").format(new Date());
     }
-
+    
     Users(String email,String username,String nume,String prenume, String parola, String creationDate){
         this.username = username;
         this.nume = nume;
@@ -20,7 +20,7 @@ public class Users {
         this.email = email;
         this.creationDate = creationDate;
     }
-    
+
     public String getParola() {
         return parola;
     }

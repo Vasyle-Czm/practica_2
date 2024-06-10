@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import java.awt.Color;
 import java.io.*;
 import java.net.URL;
 
@@ -25,7 +26,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel;
     @FXML
     private ListView<String> myListView = new ListView<>();
 
@@ -102,15 +103,19 @@ public class Controller implements Initializable{
             }
             in.close();
             
+            String[] c = new String[acc.size()];
+            for(int i=0;i<acc.size();i++){
+                c[i] = acc.get(i).getUsername();
+            }
             
-            
-            String[] c = {"user1","user2","user3"};
             myListView.getItems().addAll(c);
             myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-                myLabel.setText(myListView.getSelectionModel().getSelectedItem());
+                int index = myListView.getSelectionModel().getSelectedIndex();
+                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:");
+                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate());
+                myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
             }
             
         });
