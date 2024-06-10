@@ -30,29 +30,19 @@ public class App extends Application{
         primaryStage.show();
     }
 
-    public static void input() throws FileNotFoundException{
-        Scanner in = new Scanner(new File("src\\Database\\accounts.txt"));
+    // public static void input() throws FileNotFoundException{
+    //     Scanner in = new Scanner(new File("src\\Database\\accounts.txt"));
         
         
-        while(in.hasNext()){
-            Controller.loginBD.add(in.next());
-            Controller.passwordBD.add(in.next());
-        }
-        in.close();
-        
-
-        // System.out.println("Lista de loginuri");
-        // for(String a : Controller.loginBD){
-        //     System.out.println(a);
-        // }
-        // System.out.println("Lista de parole");
-        // for(String a : Controller.passwordBD){
-        //     System.out.println(a);
-        // }
-    }
+    //     while(in.hasNext()){
+    //         Controller.loginBD.add(in.next());
+    //         Controller.passwordBD.add(in.next());
+    //     }
+    //     in.close();
+    // }
 
     public static void main(String[] args) throws Exception,FileNotFoundException {
-        input();
+        //input();
         launch(args);
     }
 }

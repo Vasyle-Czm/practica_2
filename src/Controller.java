@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,6 +31,8 @@ public class Controller implements Initializable{
 
     protected static ArrayList<String> passwordBD = new ArrayList<>();
     protected static ArrayList<String> loginBD = new ArrayList<>();
+
+    private ArrayList<Users> acc = new ArrayList<>();
 
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
@@ -80,34 +83,10 @@ public class Controller implements Initializable{
     }
 
     public void register(ActionEvent event) throws IOException{
-        String l = loginRegister.getText();
-        String p = passwordRegister.getText();
-        FileWriter fout = new FileWriter(new File("src\\Database\\accounts.txt"),true);
-        FileWriter dout = new FileWriter(new File("src\\Database\\details.txt"),true);
-        int k = 0;
-        for(int i = 0; i < loginBD.size(); i++){
-            if(loginBD.get(i).equals(l)){
-                k++;
-            }
-        }
-
-        if(k == 0){
-            registerMessage1.setStyle("-fx-text-fill: green;");
-            registerMessage.setStyle("-fx-text-fill: transparent;");
-            
-            loginBD.add(l);
-            passwordBD.add(p);
-            fout.write("\n"+l+" "+p);
-            dout.write("\n"+userName.getText()+" "+firstName.getText()+" "+lastName.getText());
-        }
-        else{
-            registerMessage.setStyle("-fx-text-fill: red;");
-            registerMessage1.setStyle("-fx-text-fill: transparent;");
-            System.out.println("EROARE LOGINUL DEJA EXISTA");
-        }
-        k = 0;
-        fout.close();
-        dout.close();
+        FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
+        acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
+        out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate());
+        out.close();
     }
 
     public void test(){
@@ -116,9 +95,18 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String[] c = {"user1","user2","user3"};
-        myListView.getItems().addAll(c);
-        myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        try {
+            Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
+            while(in.hasNext()){
+                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
+            }
+            in.close();
+            
+            
+            
+            String[] c = {"user1","user2","user3"};
+            myListView.getItems().addAll(c);
+            myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -126,6 +114,8 @@ public class Controller implements Initializable{
             }
             
         });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }
