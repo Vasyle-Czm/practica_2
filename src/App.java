@@ -1,6 +1,4 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -30,19 +28,7 @@ public class App extends Application{
         primaryStage.show();
     }
 
-    // public static void input() throws FileNotFoundException{
-    //     Scanner in = new Scanner(new File("src\\Database\\accounts.txt"));
-        
-        
-    //     while(in.hasNext()){
-    //         Controller.loginBD.add(in.next());
-    //         Controller.passwordBD.add(in.next());
-    //     }
-    //     in.close();
-    // }
-
     public static void main(String[] args) throws Exception,FileNotFoundException {
-        //input();
         launch(args);
     }
 }

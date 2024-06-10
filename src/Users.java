@@ -2,8 +2,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Users {
-    private String username,nume,prenume,email,parola;
-    private String creationDate;
+    private String username,nume,prenume,email,parola,creationDate;
+
     Users(String email,String username,String nume,String prenume,String parola){
         this.username = username;
         this.nume = nume;
@@ -12,12 +12,13 @@ public class Users {
         this.parola = parola;
         creationDate = new SimpleDateFormat("dd-MM-yyyy|HH:mm").format(new Date());
     }
-    
+
     Users(String email,String username,String nume,String prenume, String parola, String creationDate){
         this.username = username;
         this.nume = nume;
         this.prenume = prenume;
         this.email = email;
+        this.parola = parola;
         this.creationDate = creationDate;
     }
 

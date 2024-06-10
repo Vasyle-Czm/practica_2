@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import java.awt.Color;
 import java.io.*;
 import java.net.URL;
 
@@ -30,9 +29,6 @@ public class Controller implements Initializable{
     @FXML
     private ListView<String> myListView = new ListView<>();
 
-    protected static ArrayList<String> passwordBD = new ArrayList<>();
-    protected static ArrayList<String> loginBD = new ArrayList<>();
-
     private ArrayList<Users> acc = new ArrayList<>();
 
     public void login(ActionEvent event) throws IOException{
@@ -41,14 +37,11 @@ public class Controller implements Initializable{
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(true);
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));
-            // String[] users = {"user1","user2"};
-            // System.out.println("myListView este null: " + (myListView == null));
-            
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));     
         }
         else{
-            for(int i=0;i<loginBD.size();i++){
-                if(loginBD.get(i).equals(loginLogin.getText()) && passwordBD.get(i).equals(passwordLogin.getText())){
+            for(int i=0;i<acc.size();i++){
+                if(acc.get(i).getEmail().equals(loginLogin.getText()) && acc.get(i).getParola().equals(passwordLogin.getText())){
                     k = true;
                     break;
                 }
