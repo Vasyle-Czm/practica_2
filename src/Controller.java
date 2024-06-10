@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -41,7 +42,7 @@ public class Controller implements Initializable{
         }
         else{
             for(int i=0;i<acc.size();i++){
-                if(acc.get(i).getEmail().equals(loginLogin.getText()) && acc.get(i).getParola().equals(passwordLogin.getText())){
+                if((acc.get(i).getEmail().equals(loginLogin.getText()) || acc.get(i).getUsername().equals(loginLogin.getText())) && acc.get(i).getParola().equals(passwordLogin.getText())){
                     k = true;
                     break;
                 }
@@ -77,10 +78,25 @@ public class Controller implements Initializable{
     }
 
     public void register(ActionEvent event) throws IOException{
-        FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
-        acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
-        out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate());
-        out.close();
+        boolean k = false;
+        for(int i=0;i<acc.size();i++){
+            if(acc.get(i).getEmail().equals(loginRegister.getText()) || acc.get(i).getUsername().equals(userName.getText())){
+                registerMessage.setTextFill(Color.RED);
+                registerMessage1.setTextFill(Color.TRANSPARENT);
+                k = true;
+                break;
+            }
+        }
+
+        
+        if(k == false){
+            registerMessage.setTextFill(Color.TRANSPARENT);
+            registerMessage1.setTextFill(Color.GREEN);
+            FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
+            acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
+            out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate());
+            out.close();
+        }
     }
 
     public void test(){
