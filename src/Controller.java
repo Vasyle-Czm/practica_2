@@ -94,13 +94,13 @@ public class Controller implements Initializable{
             registerMessage1.setTextFill(Color.GREEN);
             FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
             acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
-            out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate());
+            out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation());
             out.close();
         }
     }
 
-    public void test(){
-        System.out.println("DEBUG");
+    public void quitManager(){
+        System.out.println("INCA NU FACE NIMIC");
     }
 
     @Override
@@ -108,10 +108,10 @@ public class Controller implements Initializable{
         try {
             Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
             while(in.hasNext()){
-                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
+                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
             }
             in.close();
-            
+
             String[] c = new String[acc.size()];
             for(int i=0;i<acc.size();i++){
                 c[i] = acc.get(i).getUsername();
@@ -122,8 +122,9 @@ public class Controller implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
                 int index = myListView.getSelectionModel().getSelectedIndex();
-                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:");
-                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate());
+                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Statutul contului:");
+                String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
+                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
                 myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
             }
             

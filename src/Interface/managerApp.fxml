@@ -65,7 +65,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="userList" mnemonicParsing="false" onAction="#test" text="Quit" />
+            <MenuItem fx:id="userList" mnemonicParsing="false" onAction="#quitManager" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
