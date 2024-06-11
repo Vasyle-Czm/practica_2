@@ -16,6 +16,7 @@ public class App extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
+        
     }
 
     public static void main(String[] args) throws Exception,FileNotFoundException {

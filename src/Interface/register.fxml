@@ -9,20 +9,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<Pane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <Label layoutX="223.0" layoutY="28.0" text="Register">
+      <Label layoutX="180.0" layoutY="28.0" text="Creare cont">
          <font>
             <Font size="47.0" />
          </font>
       </Label>
       <TextField fx:id="loginRegister" layoutX="233.0" layoutY="100.0" promptText="Email" />
       <TextField fx:id="userName" layoutX="233.0" layoutY="133.0" promptText="User name" />
-      <TextField fx:id="firstName" layoutX="233.0" layoutY="168.0" promptText="FIrst name" />
-      <TextField fx:id="lastName" layoutX="233.0" layoutY="203.0" promptText="Last name" />
-      <PasswordField fx:id="passwordRegister" layoutX="233.0" layoutY="237.0" promptText="Password" />
+      <TextField fx:id="firstName" layoutX="233.0" layoutY="168.0" promptText="Nume" />
+      <TextField fx:id="lastName" layoutX="233.0" layoutY="203.0" promptText="Prenume" />
+      <PasswordField fx:id="passwordRegister" layoutX="233.0" layoutY="237.0" promptText="Parola" />
       <Button fx:id="register" layoutX="278.0" layoutY="330.0" mnemonicParsing="false" onAction="#register" text="Register" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginPage" style="-fx-background-color: transparent; -fx-border-radius: 100; -fx-border-color: black; -fx-border-width: 1;" text="Login Page">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginPage" text="Login Page">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

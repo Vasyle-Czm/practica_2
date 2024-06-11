@@ -11,13 +11,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
+import java.awt.image.BufferedImage;
 
 // ListView
 // https://www.youtube.com/watch?v=Pqfd4hoi5cc&list=PLZPZq0r_RZOM-8vJA3NQFZB7JroDcMwev&index=21
@@ -32,6 +38,10 @@ public class Controller implements Initializable{
     private ListView<String> myListView = new ListView<>();
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
+    @FXML
+    private Button newReport;
+    @FXML
+    private ImageView avatar = new ImageView();
 
     private ArrayList<Users> acc = new ArrayList<>();
     
@@ -125,8 +135,9 @@ public class Controller implements Initializable{
     }
 
     public void newReport(ActionEvent event) throws IOException{
+        Parent scene = FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("src\\Interface\\appNewReport.fxml"))));
+        stage.setScene(new Scene(scene));
     }
 
     public void accountActivation() throws IOException{
@@ -230,8 +241,6 @@ public class Controller implements Initializable{
             
             
             
-            
-            
             Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
             while(in.hasNext()){
                 acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
@@ -254,7 +263,20 @@ public class Controller implements Initializable{
                 myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
             }
             
+            
         });
+            
+            
+            ///////////////////////////////////////////////
+
+            avatar.setImage(new Image("Database\\1.jpg"));
+            Circle border = new Circle(37.5,Color.RED);
+            border.setCenterX(37.5);
+            border.setCenterY(37.5);
+            avatar.setClip(border);
+
+            ///////////////////////////////////////////////
+
         } catch (Exception e) {
             System.out.println("EROARE" + e);
         }
