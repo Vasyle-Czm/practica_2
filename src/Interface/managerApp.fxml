@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -48,7 +49,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -91,7 +92,7 @@
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane>
+        <AnchorPane prefHeight="551.0" prefWidth="100.0">
           <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Lista de utilizatori :" textAlignment="CENTER" wrapText="false">
               <font>
@@ -106,7 +107,7 @@
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
+            <AnchorPane id="Content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="474.0">
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text=" Selectati un utilizator pentru mai multe detalii" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <Label fx:id="myLabel" layoutX="199.0" layoutY="66.0">
@@ -119,6 +120,9 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
+                        <Button layoutX="41.0" layoutY="484.0" mnemonicParsing="false" onAction="#accountActivation" text="Activare" />
+                        <Button layoutX="333.0" layoutY="484.0" mnemonicParsing="false" onAction="#accountDezactivation" text="Dezactivare" />
+                        <Button layoutX="197.0" layoutY="484.0" mnemonicParsing="false" onAction="#accountDeletion" text="Stergere" />
               </children>
             </AnchorPane>
           </content>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -34,14 +34,12 @@
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></PasswordField>
-            <Label fx:id="loginMessage" layoutX="244.0" layoutY="92.0" style="-fx-text-fill: transparent;" text="Parola sau Login gresit" textFill="RED">
-               <font>
-                  <Font size="10.0" />
-               </font>
+            <Label fx:id="loginMessage" layoutX="234.0" layoutY="91.0" style="-fx-text-fill: transparent;" text="Parola sau Login gresit" textFill="RED">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
+            <Label fx:id="activationMessage" layoutX="186.0" layoutY="96.0" style="-fx-text-fill: transparent;" text="Contul nu e activat, adresațivă la un manager !" textFill="RED" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

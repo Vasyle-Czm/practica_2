@@ -27,16 +27,20 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
 
     private ArrayList<Users> acc = new ArrayList<>();
-
+    
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
+        int index = 0;
+        activationMessage.setTextFill(Color.TRANSPARENT);
+        loginMessage.setTextFill(Color.TRANSPARENT);
+
 
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -47,6 +51,7 @@ public class Controller implements Initializable{
             for(int i=0;i<acc.size();i++){
                 if((acc.get(i).getEmail().equals(loginLogin.getText()) || acc.get(i).getUsername().equals(loginLogin.getText())) && acc.get(i).getParola().equals(passwordLogin.getText())){
                     k = true;
+                    index = i;
                     break;
                 }
             }
@@ -54,10 +59,16 @@ public class Controller implements Initializable{
                 loginMessage.setStyle("-fx-text-fill: red;");
             }
             else{
-                Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                stage.setResizable(true);
-                stage.setScene(new Scene(t1));
+                if(acc.get(index).getActivation() == true){
+                    Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
+                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    stage.setResizable(true);
+                    stage.setScene(new Scene(t1));
+                }
+                else{
+                    activationMessage.setTextFill(Color.RED);
+                    System.out.println("CONTUL NU E ACTIVAT");
+                }
             }
         }
     }
@@ -106,6 +117,92 @@ public class Controller implements Initializable{
         System.out.println("INCA NU FACE NIMIC");
     }
 
+
+    public void accountActivation() throws IOException{
+        int index = myListView.getSelectionModel().getSelectedIndex();
+        
+        if(acc.get(index).getActivation() == false){
+            acc.get(index).setActivation(true);
+            FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
+
+            String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
+            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
+
+            for(int i=0;i<acc.size();i++){
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                if(i != acc.size() - 1){
+                    save.write("\n");
+                }
+            }
+            save.close();
+        }
+        else
+            System.out.println("CONTUL ESTE DEJA ACTIVAT");   
+    
+    }
+    
+    public void accountDezactivation() throws IOException{
+        int index = myListView.getSelectionModel().getSelectedIndex();
+
+        if(acc.get(index).getActivation() == true){
+            acc.get(index).setActivation(false);
+            FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
+
+            String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
+            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
+
+            for(int i=0;i<acc.size();i++){
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                if(i != acc.size() - 1){
+                    save.write("\n");
+                }
+            }
+
+            save.close();
+        }
+        else
+            System.out.println("CONTUL ESTE DEJA DEZACTIVAT");
+    }
+
+    public void accountDeletion() throws IOException{
+        try {
+            
+            int index = myListView.getSelectionModel().getSelectedIndex();
+    
+            acc.remove(index);
+    
+            FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
+    
+            for(int i=0;i<acc.size();i++){
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                if(i != acc.size() - 1){
+                    save.write("\n");
+                }
+            }
+            
+            String[] c = new String[acc.size()];
+            for(int i=0;i<acc.size();i++){
+                c[i] = acc.get(i).getUsername();
+            }
+    
+    
+            myLabel.setText(null);
+            infoLabel.setText(null);
+    
+            myListView.getSelectionModel().clearSelection();
+            myListView.getItems().setAll(c);
+    
+            save.close();
+
+        }
+        catch(Exception e){
+            System.out.println("EROARE \n" + e);
+        }
+        
+    }
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -133,7 +230,7 @@ public class Controller implements Initializable{
             
         });
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("EROARE" + e);
         }
     }
 }
