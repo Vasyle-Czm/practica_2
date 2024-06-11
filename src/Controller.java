@@ -27,7 +27,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -92,6 +92,8 @@ public class Controller implements Initializable{
     }
 
     public void register(ActionEvent event) throws IOException{
+        notnullMessage.setTextFill(Color.TRANSPARENT);
+
         boolean k = false;
         for(int i=0;i<acc.size();i++){
             if(acc.get(i).getEmail().equals(loginRegister.getText()) || acc.get(i).getUsername().equals(userName.getText())){
@@ -104,12 +106,17 @@ public class Controller implements Initializable{
 
         
         if(k == false){
-            registerMessage.setTextFill(Color.TRANSPARENT);
-            registerMessage1.setTextFill(Color.GREEN);
-            FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
-            acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
-            out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation());
-            out.close();
+            if(loginRegister.getText().isEmpty() || userName.getText().isEmpty() || firstName.getText().isEmpty() || lastName.getText().isEmpty() || passwordRegister.getText().isEmpty() || selectSubdivision.getSelectionModel().isEmpty()){
+                notnullMessage.setTextFill(Color.RED);
+            } 
+            else{
+                registerMessage.setTextFill(Color.TRANSPARENT);
+                registerMessage1.setTextFill(Color.GREEN);
+                FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
+                acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
+                out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation());
+                out.close();    
+            }
         }
     }
 
@@ -206,6 +213,16 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            String[] sub = {"Diviziunea 1","Diviziunea 2","Diviziunea 3"};
+            selectSubdivision.getItems().addAll(sub);
+            
+            
+            
+            
+            
+            
+            
+            
             Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
             while(in.hasNext()){
                 acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
