@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -29,6 +30,8 @@ public class Controller implements Initializable{
     private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel;
     @FXML
     private ListView<String> myListView = new ListView<>();
+    @FXML
+    private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
 
     private ArrayList<Users> acc = new ArrayList<>();
 
