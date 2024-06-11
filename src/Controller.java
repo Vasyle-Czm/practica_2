@@ -124,6 +124,10 @@ public class Controller implements Initializable{
         System.out.println("INCA NU FACE NIMIC");
     }
 
+    public void newReport(ActionEvent event) throws IOException{
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("src\\Interface\\appNewReport.fxml"))));
+    }
 
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
@@ -206,6 +210,11 @@ public class Controller implements Initializable{
             System.out.println("EROARE \n" + e);
         }
         
+    }
+
+
+    public void appSettings(){
+        System.out.println("SETARI");
     }
 
 
