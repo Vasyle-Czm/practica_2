@@ -275,14 +275,19 @@ public class Controller implements Initializable{
             
             ///////////////////////////////////////////////
 
-            Image image = new Image("Database\\4.jpg");
-            avatar.setImage(image);
+            try {
+                Image image = new Image("Database\\3.jpg");
+                avatar.setImage(image);
+                
+            } catch (Exception e) {
+                System.out.println("EROARE ESTE LA IMAGEINE URMATOAREA " + e);
+            }
             
             
-            // Circle border = new Circle(37.5,Color.RED);
-            // border.setCenterX(37.5);
-            // border.setCenterY(37.5);
-            // avatar.setClip(border);
+            Circle border = new Circle(37.5,Color.RED);
+            border.setCenterX(37.5);
+            border.setCenterY(37.5);
+            avatar.setClip(border);
             appUsername.setText(acc.get(userIndex).getUsername());
 
             ///////////////////////////////////////////////

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -36,7 +37,10 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <ImageView fx:id="avatar" fitHeight="75.0" fitWidth="75.0" layoutX="551.0" layoutY="14.0" pickOnBounds="true" smooth="false" />
+            <ImageView fx:id="avatar" cache="true" fitHeight="75.0" fitWidth="75.0" layoutX="551.0" layoutY="14.0" smooth="false">
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis></ImageView>
             <Label fx:id="appUsername" alignment="CENTER" contentDisplay="CENTER" layoutX="540.0" layoutY="93.0" prefHeight="17.0" prefWidth="98.0" textAlignment="CENTER" wrapText="true" />
          </children>
     </AnchorPane>
