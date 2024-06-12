@@ -13,7 +13,7 @@
       <menus>
         <Menu mnemonicParsing="false">
                <graphic>
-                  <Button mnemonicParsing="false" onAction="#loginPage" text="Log out" />
+                  <Button mnemonicParsing="false" onAction="#backToApp" text="Log out" />
                </graphic>
         </Menu>
       </menus>

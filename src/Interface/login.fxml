@@ -55,7 +55,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button layoutX="225.0" layoutY="4.0" mnemonicParsing="false" onAction="#forgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
+            <Button layoutX="225.0" layoutY="4.0" mnemonicParsing="false" onAction="#toForgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -63,7 +63,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button layoutX="225.0" layoutY="-17.0" mnemonicParsing="false" onAction="#createNewAccount" style="-fx-background-color: transparent;" text="Creaza cont nou" textFill="#3c00ff" textOverrun="CLIP">
+            <Button layoutX="225.0" layoutY="-17.0" mnemonicParsing="false" onAction="#toCreateNewAccount" style="-fx-background-color: transparent;" text="Creaza cont nou" textFill="#3c00ff" textOverrun="CLIP">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

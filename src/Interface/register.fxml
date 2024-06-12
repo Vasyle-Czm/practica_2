@@ -22,7 +22,7 @@
       <TextField fx:id="lastName" layoutX="233.0" layoutY="203.0" promptText="Prenume" />
       <PasswordField fx:id="passwordRegister" layoutX="233.0" layoutY="237.0" promptText="Parola" />
       <Button fx:id="register" layoutX="278.0" layoutY="330.0" mnemonicParsing="false" onAction="#register" text="Register" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginPage" text="Login Page">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toLoginPage" text="Login Page">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

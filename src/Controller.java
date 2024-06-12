@@ -31,7 +31,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,appUsername;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -42,6 +42,7 @@ public class Controller implements Initializable{
     private ImageView avatar = new ImageView();
 
     private ArrayList<Users> acc = new ArrayList<>();
+    private static int userIndex;
     
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
@@ -68,9 +69,10 @@ public class Controller implements Initializable{
             }
             else{
                 if(acc.get(index).getActivation() == true){
+                    userIndex = index;
                     Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    stage.setResizable(true);
+                    stage.setResizable(false);
                     stage.setScene(new Scene(t1));
                 }
                 else{
@@ -81,24 +83,6 @@ public class Controller implements Initializable{
         }
     }
     
-    public void forgotPassword(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\fgpassword.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
-    }
-
-    public void createNewAccount(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\register.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
-    }
-
-    public void loginPage(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
-    }
-
     public void register(ActionEvent event) throws IOException{
         notnullMessage.setTextFill(Color.TRANSPARENT);
 
@@ -127,16 +111,40 @@ public class Controller implements Initializable{
             }
         }
     }
+    
+    public void toForgotPassword(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\fgpassword.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void toCreateNewAccount(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\register.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void toLoginPage(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+
+    public void backToApp(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));
+    }
+    public void toNewReport(ActionEvent event) throws IOException{
+        Parent scene = FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(scene));
+    }
 
     public void quitManager(){
         System.out.println("INCA NU FACE NIMIC");
     }
 
-    public void newReport(ActionEvent event) throws IOException{
-        Parent scene = FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(scene));
-    }
 
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
@@ -267,11 +275,15 @@ public class Controller implements Initializable{
             
             ///////////////////////////////////////////////
 
-            avatar.setImage(new Image("Database\\1.jpg"));
-            Circle border = new Circle(37.5,Color.RED);
-            border.setCenterX(37.5);
-            border.setCenterY(37.5);
-            avatar.setClip(border);
+            Image image = new Image("Database\\4.jpg");
+            avatar.setImage(image);
+            
+            
+            // Circle border = new Circle(37.5,Color.RED);
+            // border.setCenterX(37.5);
+            // border.setCenterY(37.5);
+            // avatar.setClip(border);
+            appUsername.setText(acc.get(userIndex).getUsername());
 
             ///////////////////////////////////////////////
 

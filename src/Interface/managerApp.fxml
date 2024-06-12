@@ -39,7 +39,7 @@
         </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Button mnemonicParsing="false" onAction="#loginPage" style="-fx-background-color: transparent;" text="Delogare" />
+                  <Button mnemonicParsing="false" onAction="#toLoginPage" style="-fx-background-color: transparent;" text="Delogare" />
                </graphic>
             </Menu>
       </menus>
