@@ -3,6 +3,7 @@ import java.util.Date;
 
 public class Users {
     private String username,nume,prenume,email,parola,creationDate;
+    private int raport;
     private boolean activation;
     Users(String email,String username,String nume,String prenume,String parola){
         this.username = username;
@@ -14,7 +15,7 @@ public class Users {
         creationDate = new SimpleDateFormat("dd-MM-yyyy|HH:mm").format(new Date());
     }
 
-    Users(String email,String username,String nume,String prenume, String parola, String creationDate, String activationStatus){
+    Users(String email,String username,String nume,String prenume, String parola, String creationDate, String activationStatus, int raport){
         this.username = username;
         this.nume = nume;
         this.prenume = prenume;
@@ -26,9 +27,12 @@ public class Users {
             this.activation = true;
         else
             this.activation = false;
-        
+        this.raport = raport;
     }
     
+    public int getRaport() {
+        return raport;
+    }
     public boolean getActivation(){
         return activation;
     }
@@ -70,5 +74,8 @@ public class Users {
     }
     public void setActivation(boolean activation) {
         this.activation = activation;
+    }
+    public void setRaport(int raport) {
+        this.raport = raport;
     }
 }

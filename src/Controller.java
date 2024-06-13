@@ -19,9 +19,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 // ListView
 // https://www.youtube.com/watch?v=Pqfd4hoi5cc&list=PLZPZq0r_RZOM-8vJA3NQFZB7JroDcMwev&index=21
@@ -29,17 +35,19 @@ import java.net.URL;
 
 public class Controller implements Initializable{
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,appUsername;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,appUsername,fileInputMessage,reportSuccess;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport;
+    private Button newReport; 
     @FXML
     private ImageView avatar = new ImageView();
+    @FXML
+    private TextArea reportDesc;
 
     private ArrayList<Users> acc = new ArrayList<>();
     private static int userIndex;
@@ -106,7 +114,7 @@ public class Controller implements Initializable{
                 registerMessage1.setTextFill(Color.GREEN);
                 FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
                 acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
-                out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation());
+                out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation() + " " + "0");
                 out.close();    
             }
         }
@@ -157,7 +165,7 @@ public class Controller implements Initializable{
             myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
 
             for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
                 if(i != acc.size() - 1){
                     save.write("\n");
                 }
@@ -180,7 +188,7 @@ public class Controller implements Initializable{
             myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
 
             for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
                 if(i != acc.size() - 1){
                     save.write("\n");
                 }
@@ -202,7 +210,7 @@ public class Controller implements Initializable{
             FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
     
             for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation());
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
                 if(i != acc.size() - 1){
                     save.write("\n");
                 }
@@ -234,7 +242,57 @@ public class Controller implements Initializable{
         System.out.println("SETARI");
     }
 
+    @FXML
+    private void singeFileChooser(ActionEvent event) {
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new ExtensionFilter("Imagini", "*.png", "*.jpg")
+        );
+        fc.setInitialDirectory(new File("src/Database/PozeChitante")); 
+        File selectedFile = fc.showOpenDialog(stage);
+    
+        if (selectedFile != null) {
+            try {
+                String newFileName = "raport---"+acc.get(userIndex).getUsername()+"---"+acc.get(userIndex).getRaport()+".png";
 
+                
+                Path sourcePath = selectedFile.toPath();
+                Path targetPath = new File("src/Database/PozeChitante/" + newFileName).toPath();
+    
+                Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                
+
+                fileInputMessage.setText("Fisier salvat cu succes");
+                fileInputMessage.setTextFill(Color.GREEN);
+
+                FileWriter save  = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
+                for(int i=0;i<acc.size();i++){
+                    save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
+                    if(i != acc.size() - 1){
+                        save.write("\n");
+                    }
+                }
+                save.close();
+
+            } catch (Exception ex) {
+                fileInputMessage.setText("EROARE !!! Adresativă la un manager !");
+            }
+        } else {
+            fileInputMessage.setTextFill(Color.RED);
+            fileInputMessage.setText("Niciun fisier nu a fost selectat!");
+        }
+    }
+    
+    @FXML
+    private void newReport() throws IOException{
+        FileWriter out = new FileWriter(new File("src\\Database\\Reports\\"+"raport---"+acc.get(userIndex).getUsername()+"---"+acc.get(userIndex).getRaport() + ".txt"));
+        out.write(reportName.getText() + " " + reportPrice.getText()+ " \n" + reportDesc.getText());
+        out.close();
+        acc.get(userIndex).setRaport(acc.get(userIndex).getRaport() + 1);
+        reportSuccess.setTextFill(Color.GREEN);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -242,14 +300,9 @@ public class Controller implements Initializable{
             String[] sub = {"Diviziunea 1","Diviziunea 2","Diviziunea 3"};
             selectSubdivision.getItems().addAll(sub);
             
-            
-            
-            
-            
-            
             Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
             while(in.hasNext()){
-                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next()));
+                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),Integer.parseInt(in.next())));
             }
             in.close();
 
@@ -263,9 +316,9 @@ public class Controller implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
                 int index = myListView.getSelectionModel().getSelectedIndex();
-                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Statutul contului:");
+                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Statutul contului:");
                 String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
-                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
+                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
                 myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
             }
             
@@ -282,8 +335,7 @@ public class Controller implements Initializable{
             } catch (Exception e) {
                 System.out.println("EROARE ESTE LA IMAGEINE URMATOAREA " + e);
             }
-            
-            
+
             Circle border = new Circle(37.5,Color.RED);
             border.setCenterX(37.5);
             border.setCenterY(37.5);
