@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "App",
+            "vmArgs": "--module-path lib/ --add-modules javafx.controls,javafx.fxml",
+            "args": ""
+        }
+    ]
+}
