@@ -35,7 +35,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -317,6 +317,13 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            appControlPanelInfo.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
+            appControlPanelInfo1.setText(acc.get(userIndex).getEmail() + "\n" +acc.get(userIndex).getNume() + "\n" +acc.get(userIndex).getPrenume() + "\n" + acc.get(userIndex).getCreationDate() + "\n" + acc.get(userIndex).getRaport());
+        } catch (Exception e) {
+            System.out.println("Error:"+e);
+        }
+        
+        try {
             String[] sub = {"Diviziunea 1","Diviziunea 2","Diviziunea 3"};
             selectSubdivision.getItems().addAll(sub);
             
@@ -346,7 +353,7 @@ public class Controller implements Initializable{
         USER.setText(acc.get(userIndex).getUsername());
 
         } catch (Exception e) {
-            System.out.println("EROARE" + e);
+            //System.out.println("EROARE" + e);
         }
 
         
@@ -392,6 +399,9 @@ public class Controller implements Initializable{
                 }
             }
         });
+        
+        
+        
         
     }
 }

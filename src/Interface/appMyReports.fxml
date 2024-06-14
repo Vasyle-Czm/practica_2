@@ -56,12 +56,12 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <ListView fx:id="reportsList" layoutX="14.0" layoutY="14.0" prefHeight="333.0" prefWidth="160.0" />
-            <Label fx:id="reportInfo" layoutX="185.0" layoutY="14.0" text="Label">
+            <Label fx:id="reportInfo" layoutX="185.0" layoutY="14.0">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <Label fx:id="reportInfo1" layoutX="579.0" layoutY="14.0" text="Label">
+            <Label fx:id="reportInfo1" layoutX="579.0" layoutY="14.0">
                <font>
                   <Font size="20.0" />
                </font>
