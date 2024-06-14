@@ -35,7 +35,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -154,8 +154,7 @@ public class Controller implements Initializable{
     @FXML
     private void toMyReports(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml"))));
-        
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml"))));        
     }
 
     public void quitManager(){
@@ -317,17 +316,6 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         try {
             String[] sub = {"Diviziunea 1","Diviziunea 2","Diviziunea 3"};
             selectSubdivision.getItems().addAll(sub);
@@ -363,7 +351,47 @@ public class Controller implements Initializable{
 
         
 
+        //////////////////////////////////////////////////////////////
+
+
         
+        String[] list = new String[acc.get(userIndex).getRaport()];
+        for(int i=0;i<acc.get(userIndex).getRaport();i++){
+            list[i] = "Raportul numărul "+(i+1);
+        }
+        reportsList.getItems().addAll(list);
+
+        reportsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                try {
+                    int index = reportsList.getSelectionModel().getSelectedIndex();
+                    FileReader fin = new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(userIndex).getUsername()+"---"+index+".txt"));
+                    Scanner in = new Scanner(fin);
+
+                    String a = in.next();
+                    String b = in.next();
+                    String c = "";
+                    while (in.hasNextLine()) {
+                        String line = in.nextLine(); 
+                        Scanner lineScanner = new Scanner(line); 
+                        while (lineScanner.hasNext()) {
+                            c += lineScanner.next() + " "; 
+                        }
+                        c += "\n"; 
+                        lineScanner.close(); 
+                    }
+                    
+                    in.close();
+                    reportInfo.setText(a);
+                    reportInfo1.setText(b);
+                    reportInfo2.setText(c);
+                    // reportInfo
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         
     }
 }
