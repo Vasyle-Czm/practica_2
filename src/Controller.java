@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
@@ -49,6 +50,8 @@ public class Controller implements Initializable{
     private Button newReport,changeConfirm; 
     @FXML
     private ImageView avatar = new ImageView();
+    @FXML
+    private ImageView imgview = new ImageView();
     @FXML
     private TextArea reportDesc;
 
@@ -564,6 +567,10 @@ public class Controller implements Initializable{
 
                                 label2.setText(c);
                                 in.close();
+                                // TODO: Bug on report 2 on username 1
+                                // TODO: Bug on setting image
+
+                                imgview.setImage(new Image("src\\Database\\PozeChitante\\raport---1---0.png"));
                                 
                             } catch (Exception e) {
                                 // TODO: handle exception

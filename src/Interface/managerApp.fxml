@@ -10,6 +10,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -93,6 +94,7 @@
                   <Label fx:id="label" layoutX="14.0" layoutY="253.0" text="Label" />
                   <Label fx:id="label1" layoutX="183.0" layoutY="253.0" text="Label" />
                   <Label fx:id="label2" layoutX="14.0" layoutY="278.0" text="Label" />
+                  <ImageView fx:id="imgview" fitHeight="257.0" fitWidth="200.0" layoutX="214.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" />
           </children>
         </AnchorPane>
       </items>
