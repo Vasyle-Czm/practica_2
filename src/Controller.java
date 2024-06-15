@@ -36,11 +36,13 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
     private ListView<String> reportsList = new ListView<>();
+    @FXML
+    private ListView<String> reports = new ListView<>();
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
@@ -518,7 +520,58 @@ public class Controller implements Initializable{
                     infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Statutul contului:");
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
                     myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
-                    myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
+                    myLabel.setTextFill(Color.BLACK);
+                    
+
+
+
+                    
+                    String[] a = new String[acc.get(index).getRaport()];
+                    Scanner in;
+                    
+                    for(int i=0;i<acc.get(index).getRaport();i++){
+                        in = new Scanner(new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(index).getUsername()+"---"+i+".txt")));
+                        a[i] = "Raportul nr." + (i+1) + " - " + in.next();
+                        
+                        
+                    }
+                    
+                    reports.getItems().setAll(a);
+                    
+
+                    reports.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+                        @Override
+                        public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                            
+                            try {
+                                int reportIndex = reports.getSelectionModel().getSelectedIndex();
+                                Scanner in = new Scanner(new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(index).getUsername()+"---"+reportIndex+".txt")));
+                                label.setText(in.next());
+                                label1.setText(in.next());
+
+
+                                String c = "";
+                                while (in.hasNextLine()) {
+                                    String line = in.nextLine(); 
+                                    Scanner lineScanner = new Scanner(line); 
+                                    while (lineScanner.hasNext()) {
+                                        c += lineScanner.next() + " "; 
+                                    }
+                                    c += "\n"; 
+                                    lineScanner.close(); 
+                                }
+
+                                label2.setText(c);
+                                in.close();
+                                
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                            }    
+                        }
+                    });
+
+                
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
