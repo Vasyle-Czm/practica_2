@@ -296,7 +296,7 @@ public class Controller implements Initializable{
 
             Users.setBuget(Users.getBuget() - Integer.parseInt(reportPrice.getText()));
             FileWriter save = new FileWriter(new File("src\\Database\\buget.txt"));
-            save.write(Users.getBuget());
+            save.write(Users.getBuget() + " ");
             save.close();
         } catch (Exception e) {
             reportSuccess.setText("Eroare !!! (adresativa la un manager)");
