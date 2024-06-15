@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.beans.value.ChangeListener;
@@ -33,9 +34,9 @@ import java.nio.file.StandardCopyOption;
 
 public class Controller implements Initializable{
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -43,13 +44,13 @@ public class Controller implements Initializable{
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport; 
+    private Button newReport,changeConfirm; 
     @FXML
     private ImageView avatar = new ImageView();
     @FXML
     private TextArea reportDesc;
 
-    private ArrayList<Users> acc = new ArrayList<>();
+    protected static ArrayList<Users> acc = new ArrayList<>();
     private static int userIndex;
     
     public void login(ActionEvent event) throws IOException{
@@ -61,7 +62,7 @@ public class Controller implements Initializable{
 
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));     
         }
         else{
@@ -82,8 +83,6 @@ public class Controller implements Initializable{
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     stage.setResizable(false);
                     stage.setScene(new Scene(t1));
-                    
-                   
                 }
                 else{
                     activationMessage.setTextFill(Color.RED);
@@ -151,6 +150,11 @@ public class Controller implements Initializable{
         stage.setScene(new Scene(scene));
     }
 
+    public void toAppSettings(ActionEvent event) throws IOException{
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appSettings.fxml"))));
+    }
+
     @FXML
     private void toMyReports(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -209,44 +213,39 @@ public class Controller implements Initializable{
 
     public void accountDeletion() throws IOException{
         try {
-            
             int index = myListView.getSelectionModel().getSelectedIndex();
-    
             acc.remove(index);
     
-            FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
-    
-            for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
-                if(i != acc.size() - 1){
-                    save.write("\n");
-                }
-            }
+            save();
             
             String[] c = new String[acc.size()];
             for(int i=0;i<acc.size();i++){
                 c[i] = acc.get(i).getUsername();
             }
-    
-    
+
             myLabel.setText(null);
             infoLabel.setText(null);
-    
             myListView.getSelectionModel().clearSelection();
             myListView.getItems().setAll(c);
-    
-            save.close();
-
         }
-        catch(Exception e){
-            System.out.println("EROARE \n" + e);
-        }
+        catch(Exception e){}
         
     }
 
+    @FXML
+    private void setBuget(){
+        try{
+            Users.setBuget(Integer.parseInt(buget.getText()));
+            bugetLabel.setText(buget.getText() + " €");
+            FileWriter save = new FileWriter(new File("src\\Database\\buget.txt"));
+            save.write(buget.getText());
+            save.close();
 
-    public void appSettings(){
-        System.out.println("SETARI");
+            buget.clear();
+        }
+        catch(Exception e){
+            System.out.println("Buget : "+e);
+        }
     }
 
     @FXML
@@ -293,6 +292,12 @@ public class Controller implements Initializable{
             out.close();
             acc.get(userIndex).setRaport(acc.get(userIndex).getRaport() + 1);
             reportSuccess.setTextFill(Color.GREEN);
+
+
+            Users.setBuget(Users.getBuget() - Integer.parseInt(reportPrice.getText()));
+            FileWriter save = new FileWriter(new File("src\\Database\\buget.txt"));
+            save.write(Users.getBuget());
+            save.close();
         } catch (Exception e) {
             reportSuccess.setText("Eroare !!! (adresativa la un manager)");
             reportSuccess.setTextFill(Color.RED);
@@ -301,6 +306,173 @@ public class Controller implements Initializable{
         save();
 
     }
+
+    @FXML
+    private void errorClear(){
+        changeError.setVisible(false);
+    }
+
+    @FXML
+    private void newUsername(){
+        settingsTextFIeld1.clear();
+        settingsTextFIeld2.clear();
+        settingsTextFIeld3.clear();
+        settingsTextFIeld1.setPromptText("Username nou");
+        settingsTextFIeld2.setPromptText("Parola");
+        settingsTextFIeld1.setVisible(true);
+        settingsTextFIeld2.setVisible(true);
+        settingsTextFIeld3.setVisible(false);
+        changeConfirm.setVisible(true);
+        changeError.setVisible(false);
+
+        changeConfirm.setOnAction(e -> {
+            if(settingsTextFIeld2.getText().equals(acc.get(userIndex).getParola())){
+                if(settingsTextFIeld1.getText().equals(acc.get(userIndex).getUsername())){
+                    changeError.setTextFill(Color.RED);
+                    changeError.setText("Deja aveti acest username!");
+                    changeError.setVisible(true);
+                }
+                else{
+                    boolean check = false;
+                    for(int i=0;i<acc.size();i++){
+                        if(acc.get(i).getUsername().equals(settingsTextFIeld1.getText())){
+                            check = true;
+                            break;
+                        }
+                    }
+
+                    if(check == true){
+                        changeError.setTextFill(Color.RED);
+                        changeError.setText("Username-ul deja există!");
+                        changeError.setVisible(true);
+                    }
+                    else{
+                        try {
+                            acc.get(userIndex).setUsername(settingsTextFIeld1.getText());
+                            save();
+                            
+                            changeError.setTextFill(Color.GREEN);
+                            changeError.setText("Succes!");
+                            changeError.setVisible(true);
+                        } catch (Exception error) {
+                            changeError.setTextFill(Color.RED);
+                            changeError.setText("A apărut o eroare!\n"+error);
+                            changeError.setVisible(true);
+                        }
+                    }
+                }
+            }
+            else{
+                changeError.setTextFill(Color.RED);
+                changeError.setText("Parola nu corespunde!");
+                changeError.setVisible(true);
+            }
+        });
+    
+    }
+
+    @FXML
+    private void newEmail(){
+        settingsTextFIeld1.clear();
+        settingsTextFIeld2.clear();
+        settingsTextFIeld3.clear();
+        settingsTextFIeld1.setPromptText("Email nou");
+        settingsTextFIeld2.setPromptText("Parola");
+        settingsTextFIeld1.setVisible(true);
+        settingsTextFIeld2.setVisible(true);
+        settingsTextFIeld3.setVisible(false);
+        changeConfirm.setVisible(true);
+        changeError.setVisible(false);
+        
+
+        changeConfirm.setOnAction(e -> {
+            if(acc.get(userIndex).getParola().equals(settingsTextFIeld2.getText())){
+                if(acc.get(userIndex).getEmail().equals(settingsTextFIeld1.getText())){
+                    changeError.setTextFill(Color.RED);
+                    changeError.setText("Aveti deja acest email!");
+                    changeError.setVisible(true);
+                }
+                else{
+                    boolean check = false;
+                    for(int i=0;i<acc.size();i++){
+                        if(acc.get(i).getEmail().equals(settingsTextFIeld1.getText())){
+                            check = true;
+                            break;
+                        }
+                    }
+                    
+                    if(check == true){
+                        changeError.setTextFill(Color.RED);
+                        changeError.setText("Alt utilizator are\nacest email!");
+                        changeError.setVisible(true);
+                    }
+                    else{
+                        try {
+                            acc.get(userIndex).setEmail(settingsTextFIeld1.getText());
+                            save();
+
+                            changeError.setTextFill(Color.GREEN);
+                            changeError.setText("Succes!");
+                            changeError.setVisible(true);
+                        } catch (Exception error) {
+                            changeError.setTextFill(Color.RED);
+                            changeError.setText("A apărut o eroare!");
+                            changeError.setVisible(true);
+                        }
+                    }
+                }
+            }
+            else{
+                changeError.setTextFill(Color.RED);
+                changeError.setText("Parola nu corespunde!");
+                changeError.setVisible(true);
+            }
+        });
+    }
+
+    @FXML
+    private void newPassword(){
+        settingsTextFIeld1.clear();
+        settingsTextFIeld2.clear();
+        settingsTextFIeld3.clear();
+        settingsTextFIeld3.setPromptText("Parola veche");
+        settingsTextFIeld2.setPromptText("Parola nouă");
+        settingsTextFIeld3.setVisible(true);
+        settingsTextFIeld2.setVisible(true);
+        settingsTextFIeld1.setVisible(false);
+        changeConfirm.setVisible(true);
+        changeError.setVisible(false);
+
+        changeConfirm.setOnAction(e -> {
+            if(acc.get(userIndex).getParola().equals(settingsTextFIeld3.getText())){
+                if(acc.get(userIndex).getParola().equals(settingsTextFIeld2.getText())){
+                    changeError.setText("Nu vă puteți seta aceiași parolă!");
+                    changeError.setTextFill(Color.RED);
+                    changeError.setVisible(true);
+                }
+                else{
+                    try {
+                        acc.get(userIndex).setParola(settingsTextFIeld2.getText());
+                        save();
+
+                        changeError.setText("Succes!");
+                        changeError.setTextFill(Color.GREEN);
+                        changeError.setVisible(true);
+                    } catch (Exception error) {
+                        changeError.setText("A apărut o eroare!");
+                        changeError.setTextFill(Color.RED);
+                        changeError.setVisible(true);
+                    }
+                }
+            }
+            else{
+                changeError.setText("Parola veche nu\ncorespunde!");
+                changeError.setTextFill(Color.RED);
+                changeError.setVisible(true);
+            }
+        });
+    }
+
 
     private void save() throws IOException{
         FileWriter save  = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
@@ -318,21 +490,20 @@ public class Controller implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             appControlPanelInfo.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
-            appControlPanelInfo1.setText(acc.get(userIndex).getEmail() + "\n" +acc.get(userIndex).getNume() + "\n" +acc.get(userIndex).getPrenume() + "\n" + acc.get(userIndex).getCreationDate() + "\n" + acc.get(userIndex).getRaport());
-        } catch (Exception e) {
-            System.out.println("Error:"+e);
-        }
-        
+        } catch (Exception e) {}
+                
+                
+        try {                
+            appInfo.setText(acc.get(userIndex).getUsername()+ "\n" +acc.get(userIndex).getEmail() + "\n" +acc.get(userIndex).getNume() + "\n" +acc.get(userIndex).getPrenume() + "\n" + acc.get(userIndex).getCreationDate() + "\n" + acc.get(userIndex).getRaport());
+        } catch (Exception e) {}
+
+
+
         try {
-            String[] sub = {"Diviziunea 1","Diviziunea 2","Diviziunea 3"};
+            String[] sub = {"Consultanță în obținerea cetățeniei românești","Consultanță privind strategii","Consultanță în afaceri","Consultanță financiară","Consultanță IT","Consultanță în management","Consultanță în vânzări","Consultanță în marketing","Consultanță de brand","Servicii de consultanță în imobiliare"};
+            Arrays.sort(sub);
             selectSubdivision.getItems().addAll(sub);
             
-            Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
-            while(in.hasNext()){
-                acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),Integer.parseInt(in.next())));
-            }
-            in.close();
-
             String[] c = new String[acc.size()];
             for(int i=0;i<acc.size();i++){
                 c[i] = acc.get(i).getUsername();
@@ -342,66 +513,86 @@ public class Controller implements Initializable{
             myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-                int index = myListView.getSelectionModel().getSelectedIndex();
-                infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Statutul contului:");
-                String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
-                myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
-                myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
+                try {
+                    int index = myListView.getSelectionModel().getSelectedIndex();
+                    infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Statutul contului:");
+                    String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
+                    myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
+                    myLabel.setTextFill(javafx.scene.paint.Color.BLACK);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             }    
         });
 
         USER.setText(acc.get(userIndex).getUsername());
 
-        } catch (Exception e) {
-            //System.out.println("EROARE" + e);
-        }
+        } catch (Exception e) {}
 
         
 
         //////////////////////////////////////////////////////////////
 
 
-        
-        String[] list = new String[acc.get(userIndex).getRaport()];
-        for(int i=0;i<acc.get(userIndex).getRaport();i++){
-            list[i] = "Raportul numărul "+(i+1);
-        }
-        reportsList.getItems().addAll(list);
-
-        reportsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-                try {
-                    int index = reportsList.getSelectionModel().getSelectedIndex();
-                    FileReader fin = new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(userIndex).getUsername()+"---"+index+".txt"));
-                    Scanner in = new Scanner(fin);
-
-                    String a = in.next();
-                    String b = in.next();
-                    String c = "";
-                    while (in.hasNextLine()) {
-                        String line = in.nextLine(); 
-                        Scanner lineScanner = new Scanner(line); 
-                        while (lineScanner.hasNext()) {
-                            c += lineScanner.next() + " "; 
-                        }
-                        c += "\n"; 
-                        lineScanner.close(); 
-                    }
-                    
-                    in.close();
-                    reportInfo.setText(a);
-                    reportInfo1.setText(b);
-                    reportInfo2.setText(c);
-                    // reportInfo
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+        try {
+            String[] list = new String[acc.get(userIndex).getRaport()];
+            for(int i=0;i<acc.get(userIndex).getRaport();i++){
+                list[i] = "Raportul numărul "+(i+1);
             }
-        });
+            reportsList.getItems().addAll(list);
+    
+            reportsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                    try {
+                        int index = reportsList.getSelectionModel().getSelectedIndex();
+                        FileReader fin = new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(userIndex).getUsername()+"---"+index+".txt"));
+                        Scanner in = new Scanner(fin);
+    
+                        String a = in.next();
+                        String b = in.next();
+                        String c = "";
+                        while (in.hasNextLine()) {
+                            String line = in.nextLine(); 
+                            Scanner lineScanner = new Scanner(line); 
+                            while (lineScanner.hasNext()) {
+                                c += lineScanner.next() + " "; 
+                            }
+                            c += "\n"; 
+                            lineScanner.close(); 
+                        }
+                        
+                        in.close();
+                        reportInfo.setText(a);
+                        reportInfo1.setText(b);
+                        reportInfo2.setText(c);
+                        // reportInfo
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         
+
         
-        
+        try {
+            appBuget.setText(Users.getBuget()+ " €");
+        } catch (Exception e) {}
+            
+        try {   
+            bugetLabel.setText(Users.getBuget() + " €");
+        } catch (Exception e) {}
+        try{
+            settingsInfo.setText(acc.get(userIndex).getUsername()+ "\n" +acc.get(userIndex).getEmail() + "\n" +acc.get(userIndex).getNume() + "\n" +acc.get(userIndex).getPrenume() + "\n" + acc.get(userIndex).getCreationDate() + "\n" + acc.get(userIndex).getRaport());
+        }
+        catch(Exception e){}
+        try {
+            settingsInfo1.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
+        } catch (Exception e) {}
+    
     }
 }

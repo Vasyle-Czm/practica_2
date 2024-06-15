@@ -5,6 +5,7 @@ public class Users {
     private String username,nume,prenume,email,parola,creationDate;
     private int raport;
     private boolean activation;
+    private static int buget;
     Users(String email,String username,String nume,String prenume,String parola){
         this.username = username;
         this.nume = nume;
@@ -30,6 +31,9 @@ public class Users {
         this.raport = raport;
     }
     
+    public static int getBuget() {
+        return buget;
+    }
     public int getRaport() {
         return raport;
     }
@@ -77,5 +81,8 @@ public class Users {
     }
     public void setRaport(int raport) {
         this.raport = raport;
+    }
+    public static void setBuget(int buget) {
+        Users.buget = buget;
     }
 }
