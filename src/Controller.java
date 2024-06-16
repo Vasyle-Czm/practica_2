@@ -51,7 +51,7 @@ public class Controller implements Initializable{
     @FXML
     private ImageView avatar = new ImageView();
     @FXML
-    private ImageView imgview = new ImageView();
+    private ImageView imgview;
     @FXML
     private TextArea reportDesc;
 
@@ -166,9 +166,6 @@ public class Controller implements Initializable{
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml"))));        
     }
 
-    public void quitManager(){
-        System.out.println("INCA NU FACE NIMIC");
-    }
 
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
@@ -524,8 +521,8 @@ public class Controller implements Initializable{
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
                     myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
                     myLabel.setTextFill(Color.BLACK);
+                    imgview.setImage(null);
                     
-
 
 
                     
@@ -567,21 +564,17 @@ public class Controller implements Initializable{
 
                                 label2.setText(c);
                                 in.close();
-                                // TODO: Bug on report 2 on username 1
-                                // TODO: Bug on setting image
 
-                                imgview.setImage(new Image("src\\Database\\PozeChitante\\raport---1---0.png"));
+                                imgview.setImage(null);
+                                imgview.setImage(new Image("Database/PozeChitante/raport---"+acc.get(index).getUsername()+"---"+reportIndex+".png"));
                                 
-                            } catch (Exception e) {
-                                // TODO: handle exception
-                            }    
+                                
+                            } catch (Exception e) {}    
                         }
                     });
 
                 
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
+                } catch (Exception e) {}
             }    
         });
 
