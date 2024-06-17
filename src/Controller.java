@@ -3,21 +3,23 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import javax.swing.Action;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -61,7 +63,9 @@ public class Controller implements Initializable{
 
     protected static ArrayList<Users> acc = new ArrayList<>();
     private static int userIndex;
-    
+
+    int k = 0;
+
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
         int index = 0;
@@ -513,12 +517,43 @@ public class Controller implements Initializable{
 
         changeConfirm.setOnAction(e -> {
             if(dezactivationConfirmation.getText().equals(acc.get(userIndex).getEmail())){
-                System.out.println("CONT DEZACTIVAT");
+                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                try {
+                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));
+    
+
+
+                    
+                    try {
+                        acc.get(userIndex).setActivation(false);
+                        save();
+                    } catch (Exception error) {
+
+                    }
+                        Stage mess = new Stage();
+                        Label m = new Label("Contul a fost dezactivat cu succes !\nPentru reactivarea lui apropiațivă de un manager !");
+                        m.setFont(new Font(20));
+                        m.setAlignment(Pos.CENTER);
+                        m.setTextAlignment(TextAlignment.CENTER);
+                        
+                        mess.setScene(new Scene(new Pane(m),500,80));
+                        mess.setResizable(false);
+                        mess.show();
+                    
+                    // accountDezactivationMessage.setTextFill(Color.GREEN);
+                    
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
             }
             else if(dezactivationConfirmation.getText().trim().isEmpty()){
+                notnullDezactivation.setText("Nu puteți lăsa câmpuri goale !");
                 notnullDezactivation.setVisible(true);
             }
             else{
+                notnullDezactivation.setText("Email-ul nu corespunde !");
                 notnullDezactivation.setVisible(true);
             }
         });
@@ -724,5 +759,10 @@ public class Controller implements Initializable{
         } catch (Exception e) {}
 
 
+
+
+        
+
     }
 }
+
