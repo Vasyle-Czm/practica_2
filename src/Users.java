@@ -6,23 +6,26 @@ public class Users {
     private int raport;
     private boolean activation;
     private static int buget;
-    Users(String email,String username,String nume,String prenume,String parola){
+    private int subdivision;
+    Users(String email,String username,String nume,String prenume,String parola,int subdivision){
         this.username = username;
         this.nume = nume;
         this.prenume = prenume;
         this.email = email;
         this.parola = parola;
         this.activation = false;
+        this.subdivision = subdivision;
         creationDate = new SimpleDateFormat("dd-MM-yyyy|HH:mm").format(new Date());
     }
 
-    Users(String email,String username,String nume,String prenume, String parola, String creationDate, String activationStatus, int raport){
+    Users(String email,String username,String nume,String prenume, String parola, String creationDate, String activationStatus, int raport, int subdivision){
         this.username = username;
         this.nume = nume;
         this.prenume = prenume;
         this.email = email;
         this.parola = parola;
         this.creationDate = creationDate;
+        this.subdivision = subdivision;
         
         if(activationStatus.equals("true"))
             this.activation = true;
@@ -31,6 +34,9 @@ public class Users {
         this.raport = raport;
     }
     
+    public int getSubdivision() {
+        return subdivision;
+    }
     public static int getBuget() {
         return buget;
     }
@@ -84,5 +90,8 @@ public class Users {
     }
     public static void setBuget(int buget) {
         Users.buget = buget;
+    }
+    public void setSubdivision(int subdivision) {
+        this.subdivision = subdivision;
     }
 }

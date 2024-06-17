@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.scene.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 
@@ -16,13 +17,18 @@ public class App extends Application{
     public void start(Stage primaryStage) throws Exception {
         Scanner in = new Scanner(new FileReader(new File("src\\Database\\accountsInfo.txt")));
         while(in.hasNext()){
-            Controller.acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),Integer.parseInt(in.next())));
+            Controller.acc.add(new Users(in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),in.next(),Integer.parseInt(in.next()),Integer.parseInt(in.next())));
         }
         Scanner bin = new Scanner(new FileReader(new File("src\\Database\\buget.txt")));
         Users.setBuget(bin.nextInt());
         bin.close();
         in.close();
 
+        try {
+            primaryStage.getIcons().add(new Image("Database/icon.png"));
+        } catch (Exception e) {}
+        
+        primaryStage.setTitle("Consulting Company");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));
         primaryStage.show();

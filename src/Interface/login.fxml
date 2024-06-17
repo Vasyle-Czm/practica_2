@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -40,6 +40,7 @@
                </padding>
             </Label>
             <Label fx:id="activationMessage" layoutX="186.0" layoutY="96.0" style="-fx-text-fill: transparent;" text="Contul nu e activat, adresațivă la un manager !" textFill="RED" />
+            <Label fx:id="accountDezactivationMessage" layoutX="210.0" layoutY="96.0" style="-fx-text-fill: TRANSPARENT;" text="Contul a fost dezactivat cu succes" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

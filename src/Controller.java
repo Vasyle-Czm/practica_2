@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+import javax.swing.Action;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -34,10 +37,11 @@ import java.nio.file.StandardCopyOption;
 
 
 public class Controller implements Initializable{
+    protected static String[] sub = {"Consultanță în cetățenii străine","Consultanță privind strategii","Consultanță în afaceri","Consultanță financiară","Consultanță IT","Consultanță în management","Consultanță în vânzări","Consultanță în marketing","Consultanță de brand","Servicii de consultanță în imobiliare"};
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2,labelSubdivision,accountDezactivationMessage,confirmationMessageForDez,notnullDezactivation;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -47,7 +51,7 @@ public class Controller implements Initializable{
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport,changeConfirm; 
+    private Button newReport,changeConfirm,userAccountDesactivation; 
     @FXML
     private ImageView avatar = new ImageView();
     @FXML
@@ -63,6 +67,7 @@ public class Controller implements Initializable{
         int index = 0;
         activationMessage.setTextFill(Color.TRANSPARENT);
         loginMessage.setTextFill(Color.TRANSPARENT);
+        accountDezactivationMessage.setTextFill(Color.TRANSPARENT);
 
 
         if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
@@ -99,6 +104,8 @@ public class Controller implements Initializable{
     
     public void register(ActionEvent event) throws IOException{
         notnullMessage.setTextFill(Color.TRANSPARENT);
+        registerMessage.setTextFill(Color.TRANSPARENT);
+        registerMessage1.setTextFill(Color.TRANSPARENT);
 
         boolean k = false;
         for(int i=0;i<acc.size();i++){
@@ -119,12 +126,16 @@ public class Controller implements Initializable{
                 registerMessage.setTextFill(Color.TRANSPARENT);
                 registerMessage1.setTextFill(Color.GREEN);
                 FileWriter out = new FileWriter(new File("src\\Database\\accountsInfo.txt"),true);
-                acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText()));
-                out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation() + " " + "0");
+                int sub = -1;
+                sub = selectSubdivision.getSelectionModel().getSelectedIndex(); 
+             
+                acc.add(new Users(loginRegister.getText(), userName.getText(), firstName.getText(), lastName.getText(), passwordRegister.getText(), sub));
+                out.write(" \n"+ loginRegister.getText()+ " " +userName.getText()+ " " +firstName.getText()+ " " +lastName.getText()+ " " +passwordRegister.getText()+ " "+ acc.get(acc.size() - 1).getCreationDate() + " " + acc.get(acc.size() - 1).getActivation() + " " + "0" + " " + acc.get(acc.size() - 1).getSubdivision());
                 out.close();    
             }
         }
     }
+
     
     public void toForgotPassword(ActionEvent event) throws IOException{
         Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\fgpassword.fxml"));
@@ -175,10 +186,10 @@ public class Controller implements Initializable{
             FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
 
             String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
-            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
+            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport() + "\n" + sub[acc.get(index).getSubdivision()] + "\n" + activ);
 
             for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport() + " " + acc.get(i).getSubdivision());
                 if(i != acc.size() - 1){
                     save.write("\n");
                 }
@@ -198,10 +209,10 @@ public class Controller implements Initializable{
             FileWriter save = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
 
             String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
-            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + activ);
+            myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport() + "\n" + sub[acc.get(index).getSubdivision()] + "\n" + activ);
 
             for(int i=0;i<acc.size();i++){
-                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
+                save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport() + " " + acc.get(i).getSubdivision());
                 if(i != acc.size() - 1){
                     save.write("\n");
                 }
@@ -326,6 +337,9 @@ public class Controller implements Initializable{
         settingsTextFIeld3.setVisible(false);
         changeConfirm.setVisible(true);
         changeError.setVisible(false);
+        confirmationMessageForDez.setVisible(false);
+        dezactivationConfirmation.setVisible(false);
+        notnullDezactivation.setVisible(false);
 
         changeConfirm.setOnAction(e -> {
             if(settingsTextFIeld2.getText().equals(acc.get(userIndex).getParola())){
@@ -385,6 +399,9 @@ public class Controller implements Initializable{
         settingsTextFIeld3.setVisible(false);
         changeConfirm.setVisible(true);
         changeError.setVisible(false);
+        confirmationMessageForDez.setVisible(false);
+        dezactivationConfirmation.setVisible(false);
+        notnullDezactivation.setVisible(false);
         
 
         changeConfirm.setOnAction(e -> {
@@ -442,8 +459,11 @@ public class Controller implements Initializable{
         settingsTextFIeld3.setVisible(true);
         settingsTextFIeld2.setVisible(true);
         settingsTextFIeld1.setVisible(false);
+        confirmationMessageForDez.setVisible(false);
+        dezactivationConfirmation.setVisible(false);
         changeConfirm.setVisible(true);
         changeError.setVisible(false);
+        notnullDezactivation.setVisible(false);
 
         changeConfirm.setOnAction(e -> {
             if(acc.get(userIndex).getParola().equals(settingsTextFIeld3.getText())){
@@ -475,11 +495,54 @@ public class Controller implements Initializable{
         });
     }
 
+    @FXML
+    private void newDesactivation(){
+        settingsTextFIeld1.clear();
+        settingsTextFIeld2.clear();
+        settingsTextFIeld3.clear();
+        settingsTextFIeld1.setVisible(false);
+        settingsTextFIeld2.setVisible(false);
+        settingsTextFIeld3.setVisible(false);
+        changeError.setVisible(false);
+        changeConfirm.setVisible(true);
+        confirmationMessageForDez.setVisible(true);
+        confirmationMessageForDez.setText("Pentru a dezactiva contul\nintroduceți email-ul");
+        dezactivationConfirmation.setVisible(true);
+        notnullDezactivation.setVisible(false);
+
+
+        changeConfirm.setOnAction(e -> {
+            if(dezactivationConfirmation.getText().equals(acc.get(userIndex).getEmail())){
+                System.out.println("CONT DEZACTIVAT");
+            }
+            else if(dezactivationConfirmation.getText().trim().isEmpty()){
+                notnullDezactivation.setVisible(true);
+            }
+            else{
+                notnullDezactivation.setVisible(true);
+            }
+        });
+    }
+    // TODO: de terminat buttonul pentru dezactivarea contlui
+
+    // @FXML
+    // private void userAccountDesactivation(ActionEvent event) throws IOException{
+    //     acc.get(userIndex).setActivation(false);
+    //     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    //     stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));;
+    //     try {
+    //         accountDezactivationMessage.setTextFill(Color.GREEN);
+            
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //     }
+    // }
+
 
     private void save() throws IOException{
         FileWriter save  = new FileWriter(new File("src\\Database\\accountsInfo.txt"));
         for(int i=0;i<acc.size();i++){
-            save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport());
+            save.write(acc.get(i).getEmail()+ " " +acc.get(i).getUsername()+ " " +acc.get(i).getNume()+ " " +acc.get(i).getPrenume()+ " " +acc.get(i).getParola()+ " "+ acc.get(i).getCreationDate() + " " + acc.get(i).getActivation() + " " + acc.get(i).getRaport() + " " + acc.get(i).getSubdivision());
             if(i != acc.size() - 1){
                 save.write("\n");
             }
@@ -493,19 +556,22 @@ public class Controller implements Initializable{
         try {
             appControlPanelInfo.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
         } catch (Exception e) {}
-                
-                
         try {                
             appInfo.setText(acc.get(userIndex).getUsername()+ "\n" +acc.get(userIndex).getEmail() + "\n" +acc.get(userIndex).getNume() + "\n" +acc.get(userIndex).getPrenume() + "\n" + acc.get(userIndex).getCreationDate() + "\n" + acc.get(userIndex).getRaport());
         } catch (Exception e) {}
 
-
-
         try {
-            String[] sub = {"Consultanță în obținerea cetățeniei românești","Consultanță privind strategii","Consultanță în afaceri","Consultanță financiară","Consultanță IT","Consultanță în management","Consultanță în vânzări","Consultanță în marketing","Consultanță de brand","Servicii de consultanță în imobiliare"};
             Arrays.sort(sub);
             selectSubdivision.getItems().addAll(sub);
             
+            selectSubdivision.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                    labelSubdivision.setText(null);
+                }
+                
+            });
+
             String[] c = new String[acc.size()];
             for(int i=0;i<acc.size();i++){
                 c[i] = acc.get(i).getUsername();
@@ -517,13 +583,15 @@ public class Controller implements Initializable{
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
                 try {
                     int index = myListView.getSelectionModel().getSelectedIndex();
-                    infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Statutul contului:");
+                    infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Subdiviziune:"+"\n"+"Statutul contului:");
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
-                    myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + activ);
+                    myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + sub[acc.get(index).getSubdivision()] + "\n" + activ);
                     myLabel.setTextFill(Color.BLACK);
                     imgview.setImage(null);
                     
-
+                    label.setText(null);
+                    label1.setText(null);
+                    label2.setText(null);
 
                     
                     String[] a = new String[acc.get(index).getRaport()];
@@ -619,23 +687,14 @@ public class Controller implements Initializable{
                         reportInfo.setText(a);
                         reportInfo1.setText(b);
                         reportInfo2.setText(c);
-                        // reportInfo
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (FileNotFoundException e) {}
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        
+        } catch (Exception e) {}
 
-        
         try {
             appBuget.setText(Users.getBuget()+ " €");
         } catch (Exception e) {}
-            
         try {   
             bugetLabel.setText(Users.getBuget() + " €");
         } catch (Exception e) {}
@@ -646,6 +705,24 @@ public class Controller implements Initializable{
         try {
             settingsInfo1.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
         } catch (Exception e) {}
-    
+
+
+        try {
+            userAccountDesactivation.setOnAction(e -> {
+                try {
+                    acc.get(userIndex).setActivation(false);
+                    Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
+                    stage.setScene(new Scene(root));
+                    try {
+                        accountDezactivationMessage.setTextFill(Color.GREEN);
+                    } catch (Exception e2) {
+                        System.out.println(e2);
+                    }
+                } catch (IOException e1) {}
+        });
+        } catch (Exception e) {}
+
+
     }
 }
