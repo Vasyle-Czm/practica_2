@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import javax.swing.Action;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,13 +18,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
@@ -51,17 +57,18 @@ public class Controller implements Initializable{
     @FXML
     private ListView<String> reports = new ListView<>();
     @FXML
+    private ListView<String> deleteCon = new ListView<>();
+    @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport,changeConfirm,userAccountDesactivation; 
+    private Button newReport,changeConfirm,userAccountDesactivation,deleteConfirmation,button1,button2; 
     @FXML
-    private ImageView avatar = new ImageView();
-    @FXML
-    private ImageView imgview;
+    private ImageView imgview,reportPhoto;
     @FXML
     private TextArea reportDesc;
 
     protected static ArrayList<Users> acc = new ArrayList<>();
+    protected static ArrayList<String> deleteQueue = new ArrayList<>();
     private static int userIndex;
 
     int k = 0;
@@ -181,6 +188,12 @@ public class Controller implements Initializable{
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml"))));        
     }
 
+    @FXML 
+    private void toConfirmDelete(ActionEvent event) throws IOException{
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml"))));
+        stage.show();
+    }
 
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
@@ -558,6 +571,28 @@ public class Controller implements Initializable{
             }
         });
     }
+
+    @FXML
+    private void newDelete() throws IOException{
+        boolean check = false;
+        for(String user : deleteQueue){
+            if(acc.get(userIndex).getUsername().equals(user)){
+                check = true;
+                break;
+            }
+        }
+
+        if(!check){
+            deleteQueue.add(acc.get(userIndex).getUsername());
+            FileWriter saveQ = new FileWriter(new File("src\\Database\\deleteQueue.txt"),true);
+            saveQ.write(acc.get(userIndex).getUsername() + "\n");
+            saveQ.close();        
+        }
+        else{
+            System.out.println("CONTUL DEJA ESTE INREGISTRAT");
+        }
+
+    }
     // TODO: de terminat buttonul pentru dezactivarea contlui
 
     // @FXML
@@ -618,6 +653,30 @@ public class Controller implements Initializable{
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
                 try {
                     int index = myListView.getSelectionModel().getSelectedIndex();
+                    deleteConfirmation.setVisible(false);
+                    
+                    for(int i=0;i<deleteQueue.size();i++){
+                        if(acc.get(index).getUsername().equals(deleteQueue.get(i))){
+                            deleteConfirmation.setVisible(true);
+                            
+                            deleteConfirmation.setOnAction(e -> {
+                                acc.remove(index);
+                                try {
+                                    save();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+                                // TODO: button pentru confirmare stergere
+                            });
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
                     infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Subdiviziune:"+"\n"+"Statutul contului:");
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
                     myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + sub[acc.get(index).getSubdivision()] + "\n" + activ);
@@ -717,15 +776,38 @@ public class Controller implements Initializable{
                             c += "\n"; 
                             lineScanner.close(); 
                         }
-                        
                         in.close();
                         reportInfo.setText(a);
                         reportInfo1.setText(b);
                         reportInfo2.setText(c);
+
+                        try {
+                            reportPhoto.setImage(new Image("Database/PozeChitante/raport---"+acc.get(userIndex).getUsername()+"---"+index+".png"));
+                        } catch (Exception e) {}
+
+
                     } catch (FileNotFoundException e) {}
                 }
             });
         } catch (Exception e) {}
+
+
+        // ////////////////////////////////////////////////////////
+
+
+        try {
+            System.out.println(deleteQueue);
+            deleteCon.getItems().setAll(deleteQueue);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+        // TODO: this error
+
+
+        // /////////////////////////////////////////////////////////
+
 
         try {
             appBuget.setText(Users.getBuget()+ " €");
@@ -758,11 +840,20 @@ public class Controller implements Initializable{
         });
         } catch (Exception e) {}
 
-
-
-
-        
-
+        try {
+            button1.setOnMouseEntered(e -> {
+                button1.setStyle("-fx-background-color: gray;");
+            });
+            button2.setOnMouseEntered(e -> {
+                button2.setStyle("-fx-background-color: gray;");
+            });
+            button1.setOnMouseExited(e -> {
+                button1.setStyle("-fx-background-color: transparent;");
+            });
+            button2.setOnMouseExited(e -> {
+                button2.setStyle("-fx-background-color: transparent;");
+            });
+        } catch (Exception e) {}
     }
 }
 

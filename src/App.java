@@ -23,11 +23,22 @@ public class App extends Application{
         Users.setBuget(bin.nextInt());
         bin.close();
         in.close();
-
         try {
             primaryStage.getIcons().add(new Image("Database/icon.png"));
         } catch (Exception e) {}
         
+
+
+        Scanner dqin = new Scanner(new FileReader(new File("src\\Database\\deleteQueue.txt")));
+        while(dqin.hasNext()){
+            Controller.deleteQueue.add(dqin.next());
+        }
+        dqin.close();
+
+
+
+
+
         primaryStage.setTitle("Consulting Company");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));
