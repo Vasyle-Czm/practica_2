@@ -3,8 +3,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import javax.swing.Action;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,17 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
@@ -57,11 +51,11 @@ public class Controller implements Initializable{
     @FXML
     private ListView<String> reports = new ListView<>();
     @FXML
-    private ListView<String> deleteCon = new ListView<>();
+    private ListView<String> deleteCon;
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport,changeConfirm,userAccountDesactivation,deleteConfirmation,button1,button2; 
+    private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc; 
     @FXML
     private ImageView imgview,reportPhoto;
     @FXML
@@ -189,7 +183,7 @@ public class Controller implements Initializable{
     }
 
     @FXML 
-    private void toConfirmDelete(ActionEvent event) throws IOException{
+    private void toConfirmDelete(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml"))));
         stage.show();
@@ -647,35 +641,12 @@ public class Controller implements Initializable{
                 c[i] = acc.get(i).getUsername();
             }
             
-            myListView.getItems().addAll(c);
+            myListView.getItems().setAll(c);
             myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
                 try {
                     int index = myListView.getSelectionModel().getSelectedIndex();
-                    deleteConfirmation.setVisible(false);
-                    
-                    for(int i=0;i<deleteQueue.size();i++){
-                        if(acc.get(index).getUsername().equals(deleteQueue.get(i))){
-                            deleteConfirmation.setVisible(true);
-                            
-                            deleteConfirmation.setOnAction(e -> {
-                                acc.remove(index);
-                                try {
-                                    save();
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
-                                }
-
-                                // TODO: button pentru confirmare stergere
-                            });
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    
                     
                     infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Subdiviziune:"+"\n"+"Statutul contului:");
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
@@ -792,21 +763,70 @@ public class Controller implements Initializable{
         } catch (Exception e) {}
 
 
-        // ////////////////////////////////////////////////////////
-
+        //////////////////////////////////////////////////////////
 
         try {
-            System.out.println(deleteQueue);
             deleteCon.getItems().setAll(deleteQueue);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        
+            deleteCon.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                    
+                    deleteAcc.setOnAction(e -> {
+                        String user = deleteCon.getSelectionModel().getSelectedItem();
+                        for(int i = 0; i < acc.size(); i++){
+                            if(acc.get(i).getUsername().equals(user)){
+                                acc.remove(i);
+                                try {
+                                    save();
+                                } catch (IOException e1) {}
 
+                                try {
+                                    FileWriter savedelQ = new FileWriter(new File("src\\Database\\deleteQueue.txt"));
+                                    deleteQueue.remove(deleteCon.getSelectionModel().getSelectedIndex());
+                                    
+                                    for(int j=0;j<deleteQueue.size();j++){
+                                        savedelQ.write(deleteQueue.get(j)+"\n");
+                                    }
+                                    
+                                    
+                                    savedelQ.close();
+                                
+                                
+                                    deleteCon.getItems().setAll(deleteQueue);
+                                    
+                                }
+                                catch (IOException e1) {}
 
-        // TODO: this error
+                                    String[] items = new String[acc.size()];
+                                    for(int z=0; z < acc.size(); z++){
+                                        items[z] = acc.get(z).getUsername();
+                                    }
+                                    try {
+                                        for(int z=0; z < acc.size(); z++){
+                                            System.out.println(items[z]);
+                                        }
+                                        myListView.getSelectionModel().clearSelection();
+                                        myListView.getItems().setAll(items);
+                                        // TODO: trebuie sa dispara itemul si in myListView
+                                        // TODO: trebuie de adaugat un label pentru user atunci cand sterge un cont
+                                        // TODO: trebuie de rezolvat bugul cu butonul pentru crearea unui raport nou
+                                    } catch (Exception e2) {
+                                        System.out.println(e2);
+                                    }
+                                    
 
+                                break;
+                            }
+                        }
+                        deleteCon.getSelectionModel().clearSelection();
+                    });
+                }
+            });
+        
+        } catch (Exception e) {}
 
-        // /////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
 
 
         try {
@@ -839,7 +859,7 @@ public class Controller implements Initializable{
                 } catch (IOException e1) {}
         });
         } catch (Exception e) {}
-
+        
         try {
             button1.setOnMouseEntered(e -> {
                 button1.setStyle("-fx-background-color: gray;");

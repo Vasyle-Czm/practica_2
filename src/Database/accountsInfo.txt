@@ -10,4 +10,3 @@ maria@hotmail.com Maria.Mary Ionescu Maria mary123 12-04-2023/17:25 false 0 8
 alexandru@gmail.com Alexandru.Alexandru Stan Alexandru alex1234 05-06-2024/10:05 true 0 9
 florin@yahoo.com Florin_Florescu Florin Florescu password1234 18-09-2022/13:15 false 0 0
 alina@hotmail.com Alina_Ally Popescu Alina iloveyou 22-11-2023/09:50 true 0 1
-1 1 1 1 1 11-06-2024|19:12 true 5 2
