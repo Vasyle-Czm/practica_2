@@ -11,19 +11,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class NewManagerController implements Initializable{
 
     @FXML
-    Button confirm;
-    @FXML
     TextField email,username,nume,prenume,parola;
     @FXML
-    static Label message;
+    Label message;
 
     public void backToManagerApp(ActionEvent event) throws IOException{
         Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"));
@@ -39,39 +37,56 @@ public class NewManagerController implements Initializable{
         save.close();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        confirm.setOnAction(e -> {
-            message.setVisible(false);
-
-
-
-            if(email.getText().trim().isEmpty() || username.getText().trim().isEmpty() || nume.getText().trim().isEmpty() || prenume.getText().trim().isEmpty() || parola.getText().trim().isEmpty()){
-                message.setText("Nu puteti lăsa câmpuri libere!");
-                message.setVisible(true);
+    private boolean check(String email,String username){
+        for(int i=0; i<Controller.acc.size(); i++){
+            if(Controller.acc.get(i).getUsername().equals(username) || Controller.acc.get(i).getEmail().equals(email)){
+                return true;
             }
-            else{
-                boolean k = false;
-                for(int i=0;i<Controller.manAcc.size();i++){
-                    if(Controller.manAcc.get(i).getUsername().equals(username.getText()) || Controller.manAcc.get(i).getEmail().equals(email.getText())){
-                        k = true;
-                        break;
-                    }
-                }
-    
-                if(k == true){
+        }
+        return false;
+    }
+
+    @FXML
+    private void confirm(){
+        try {
+            message.setVisible(false);
+                if(email.getText().trim().isEmpty() || username.getText().trim().isEmpty() || nume.getText().trim().isEmpty() || prenume.getText().trim().isEmpty() || parola.getText().trim().isEmpty()){
+                    message.setText("Nu puteti lăsa câmpuri libere!");
+                    message.setTextFill(Color.RED);
                     message.setVisible(true);
-                    message.setText("Contul deja există");
                 }
                 else{
-                    Controller.manAcc.add(new Manageri(email.getText(), username.getText(), nume.getText(), prenume.getText(), parola.getText()));
-                    try {
-                        save();
-                    } catch (IOException e1) {
-                        System.out.println("EROARE DE SALVARE IN FISIER");
+                    boolean k = false;
+                    for(int i=0;i<Controller.manAcc.size();i++){
+                        if(Controller.manAcc.get(i).getUsername().equals(username.getText()) || Controller.manAcc.get(i).getEmail().equals(email.getText())){
+                            k = true;
+                            break;
+                        }
+                    }
+
+                    k = check(email.getText(), username.getText()) ? true : false;
+        
+                    if(k == true){
+                        message.setVisible(true);
+                        message.setTextFill(Color.RED);
+                        message.setText("Contul deja există");
+                    }
+                    else{
+                        Controller.manAcc.add(new Manageri(email.getText(), username.getText(), nume.getText(), prenume.getText(), parola.getText()));
+                        try {
+                            save();
+                        } catch (IOException e1) {
+                            System.out.println("EROARE DE SALVARE IN FISIER");
+                        }
                     }
                 }
-            }
-        });
+            
+        } catch (Exception e) {
+            System.out.println(e);    
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

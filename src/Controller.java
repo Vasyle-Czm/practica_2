@@ -61,12 +61,23 @@ public class Controller implements Initializable{
     @FXML
     private TextArea reportDesc;
 
+    // TODO: DE FACUT BUTONUL PENTRU ELIBERAREA MEMORIEI CAND SE RESPINGE CEREREA SPRE STERGEREA CONTULUI
+
     protected static ArrayList<Users> acc = new ArrayList<>();
     protected static ArrayList<String> deleteQueue = new ArrayList<>();
     protected static ArrayList<Manageri> manAcc = new ArrayList<>();
     private static int userIndex;
 
     int k = 0;
+
+
+    private boolean check(String login,String password){
+        for(int i = 0; i<manAcc.size();i++){
+            if((manAcc.get(i).getUsername().equals(login) || manAcc.get(i).getEmail().equals(login)) && (manAcc.get(i).getParola().equals(password)))
+                return true; 
+        }
+        return false;
+    }
 
     public void login(ActionEvent event) throws IOException{
         boolean k = false;
@@ -76,7 +87,7 @@ public class Controller implements Initializable{
         accountDezactivationMessage.setTextFill(Color.TRANSPARENT);
 
 
-        if(loginLogin.getText().equals("master") && passwordLogin.getText().equals("1")){
+        if(check(loginLogin.getText(), passwordLogin.getText())){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setResizable(false);
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));     
