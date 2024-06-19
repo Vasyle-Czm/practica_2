@@ -41,7 +41,7 @@ import java.nio.file.StandardCopyOption;
 public class Controller implements Initializable{
     protected static String[] sub = {"Consultanță în cetățenii străine","Consultanță privind strategii","Consultanță în afaceri","Consultanță financiară","Consultanță IT","Consultanță în management","Consultanță în vânzări","Consultanță în marketing","Consultanță de brand","Servicii de consultanță în imobiliare"};
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation,reportDesc;
     @FXML
     private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2,labelSubdivision,accountDezactivationMessage,confirmationMessageForDez,notnullDezactivation,deleteMessage,priceError,notnullError;
     @FXML
@@ -58,9 +58,6 @@ public class Controller implements Initializable{
     private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc,deleteAcc1,button3; 
     @FXML
     private ImageView imgview,reportPhoto;
-    @FXML
-    private TextArea reportDesc;
-
     // TODO: DE FACUT BUTONUL PENTRU ELIBERAREA MEMORIEI CAND SE RESPINGE CEREREA SPRE STERGEREA CONTULUI
 
     protected static ArrayList<Users> acc = new ArrayList<>();
@@ -106,10 +103,11 @@ public class Controller implements Initializable{
             else{
                 if(acc.get(index).getActivation() == true){
                     userIndex = index;
-                    Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\app.fxml")));
+                    scene.getStylesheets().add(this.getClass().getResource("Style\\app.css").toExternalForm());
                     stage.setResizable(false);
-                    stage.setScene(new Scene(t1));
+                    stage.setScene(scene);
                 }
                 else{
                     activationMessage.setTextFill(Color.RED);
@@ -153,29 +151,25 @@ public class Controller implements Initializable{
         }
     }
 
-    
-    public void toForgotPassword(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\fgpassword.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
-    }
-
     public void toCreateNewAccount(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\register.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\register.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\register.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     public void toLoginPage(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\login.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     public void backToApp(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\app.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\app.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\app.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     public void backToManagerApp(ActionEvent event) throws IOException{
@@ -186,9 +180,10 @@ public class Controller implements Initializable{
 
     public void toNewReport(ActionEvent event) throws IOException{
         sourcePath = null;
-        Parent scene = FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml"));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\appNewReport.css").toExternalForm());
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(scene));
+        stage.setScene(scene);
     }
 
     public void toAppSettings(ActionEvent event) throws IOException{
@@ -199,7 +194,9 @@ public class Controller implements Initializable{
     @FXML
     private void toMyReports(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml"))));        
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\appMyReports.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\appMyReports.css").toExternalForm());
+        stage.setScene(scene);        
     }
 
     @FXML 

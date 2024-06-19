@@ -1,0 +1,83 @@
+.root{
+    -fx-background-color: #1e1e1e;
+}
+
+.label {
+    -fx-text-fill: #ffd700; 
+}
+
+.button {
+    -fx-background-color: #ffd700; 
+    -fx-text-fill: #ffd700; 
+    -fx-font-size: 14px;
+    -fx-border-color: #ffd700; 
+    -fx-border-radius: 20px; 
+    -fx-border-width: 2px; 
+    -fx-font-weight: bold; 
+}
+
+.button:hover {
+    -fx-background-color: #ffd700; 
+    -fx-text-fill: #868686; 
+}
+
+.list-view {
+    -fx-background-color: #3d3d3d; /* culoare de fundal neagră */
+    -fx-text-fill: #ffd700; /* culoare text galben închis */
+    -fx-font-size: 14px; /* dimensiune text */
+    -fx-padding: 10px; /* padding interior */
+}
+
+/* Stilizare pentru elementele din ListView */
+.list-cell {
+    -fx-background-color: transparent; /* fundal transparent */
+    -fx-text-fill: #ffd700;
+    -fx-padding: 5px 10px; /* padding interior */
+}
+
+/* Stilizare pentru elementele selectate din ListView */
+.list-view .list-cell:selected {
+    -fx-background-color: #ffd700; /* culoare de fundal pentru elementul selectat */
+    -fx-text-fill: #1e1e1e; /* culoare text pentru elementul selectat */
+}
+
+/* Stilizare pentru elementele din ListView la hover */
+.list-view .list-cell:hover {
+    -fx-background-color: #333333; /* culoare de fundal la hover */
+    -fx-text-fill: #ffffff;
+}
+
+/* styles.css */
+
+/* Stilizare pentru ScrollPane */
+.scroll-pane {
+    -fx-background-color: #1e1e1e; /* culoare de fundal neagră */
+}
+
+/* Stilizare pentru bara de derulare verticală */
+.scroll-bar:vertical {
+    -fx-background-color: #333333; /* culoare de fundal a barei de derulare */
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+}
+
+/* Stilizare pentru bara de derulare orizontală */
+.scroll-bar:horizontal {
+    -fx-background-color: #333333; /* culoare de fundal a barei de derulare */
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+}
+
+/* Stilizare pentru butoanele de derulare */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #4d4d4d; /* culoare de fundal a butoanelor de derulare */
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+}
+
+/* Stilizare pentru butoanele de derulare la hover */
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-background-color: #666666; /* culoare de fundal a butoanelor de derulare la hover */
+}

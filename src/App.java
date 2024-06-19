@@ -47,7 +47,10 @@ public class App extends Application{
 
         primaryStage.setTitle("Consulting Company");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));
+
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\login.css").toExternalForm());
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

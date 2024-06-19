@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="login" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <AnchorPane fx:id="ap" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
             <Label layoutX="197.0" layoutY="33.0" text="Logare">
                <font>
@@ -26,11 +26,11 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextField fx:id="loginLogin" layoutX="226.0" layoutY="25.0" promptText="Email sau user name">
+            <TextField fx:id="loginLogin" layoutX="226.0" layoutY="25.0" promptText="Email sau user name" style="-fx-background-color: TRANSPARENT;">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></TextField>
-            <PasswordField fx:id="passwordLogin" layoutX="226.0" layoutY="60.0" promptText="Parola">
+            <PasswordField fx:id="passwordLogin" layoutX="226.0" layoutY="60.0" promptText="Parola" style="-fx-background-color: TRANSPARENT;">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></PasswordField>
@@ -45,7 +45,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <Button layoutX="273.0" layoutY="49.0" mnemonicParsing="false" onAction="#login" text="Login">
+            <Button layoutX="273.0" layoutY="49.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: TRANSPARENT;" text="Login">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -56,15 +56,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button layoutX="225.0" layoutY="4.0" mnemonicParsing="false" onAction="#toForgotPassword" style="-fx-background-color: transparent;" text="Ai uitat parola ?" textFill="#3c00ff" textOverrun="CLIP">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button layoutX="225.0" layoutY="-17.0" mnemonicParsing="false" onAction="#toCreateNewAccount" style="-fx-background-color: transparent;" text="Creaza cont nou" textFill="#3c00ff" textOverrun="CLIP">
+            <Button fx:id="newAcc" layoutX="225.0" layoutY="-8.0" mnemonicParsing="false" onAction="#toCreateNewAccount" style="-fx-background-color: transparent;" text="Creaza cont nou" textFill="#3c00ff" textOverrun="CLIP">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
