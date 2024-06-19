@@ -2,11 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <ListView fx:id="deleteCon" layoutX="30.0" layoutY="62.0" prefHeight="303.0" prefWidth="171.0" />
       <Button fx:id="deleteAcc" layoutX="260.0" layoutY="214.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="131.0" style="-fx-background-color: DARKRED;" text="Stergere Cont" textFill="WHITE" />
+      <HBox prefHeight="32.0" prefWidth="443.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#backToManagerApp" text="Înapoi" />
+         </children>
+      </HBox>
    </children>
 </Pane>

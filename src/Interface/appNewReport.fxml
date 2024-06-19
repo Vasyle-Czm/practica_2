@@ -38,6 +38,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
+            <Label fx:id="priceError" layoutX="320.0" layoutY="18.0" text="Nu sunt suficienți bani în buget" textFill="RED" visible="false" />
+            <Label fx:id="notnullError" layoutX="166.0" layoutY="274.0" text="Trebuie să completați formularul până la capăt&#10;pentru a continua" textAlignment="CENTER" textFill="RED" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>

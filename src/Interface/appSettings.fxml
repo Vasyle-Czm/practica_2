@@ -78,6 +78,11 @@
             <Label fx:id="changeError" alignment="CENTER" layoutX="14.0" layoutY="303.0" prefHeight="52.0" prefWidth="149.0" text="Label" textAlignment="CENTER" visible="false" />
             <Label fx:id="confirmationMessageForDez" alignment="CENTER" contentDisplay="CENTER" layoutX="-93.0" layoutY="175.0" prefHeight="58.0" prefWidth="363.0" text="dezactivation" textAlignment="CENTER" visible="false" />
             <Label fx:id="notnullDezactivation" layoutX="12.0" layoutY="309.0" text="Nu puteți lăsa câmpuri goale" textFill="RED" visible="false" />
+            <Label fx:id="deleteMessage" alignment="CENTER" layoutX="52.0" layoutY="256.0" prefHeight="79.0" prefWidth="227.0" text="Așteptați aprobarea unui manager" textAlignment="CENTER" textFill="RED" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

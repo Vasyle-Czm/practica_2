@@ -43,7 +43,7 @@ public class Controller implements Initializable{
     @FXML
     private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation;
     @FXML
-    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2,labelSubdivision,accountDezactivationMessage,confirmationMessageForDez,notnullDezactivation;
+    private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2,labelSubdivision,accountDezactivationMessage,confirmationMessageForDez,notnullDezactivation,deleteMessage,priceError,notnullError;
     @FXML
     private ListView<String> myListView = new ListView<>();
     @FXML
@@ -165,7 +165,15 @@ public class Controller implements Initializable{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(t1));
     }
+
+    public void backToManagerApp(ActionEvent event) throws IOException{
+        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(t1));    
+    }
+
     public void toNewReport(ActionEvent event) throws IOException{
+        sourcePath = null;
         Parent scene = FXMLLoader.load(getClass().getResource("Interface\\appNewReport.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(scene));
@@ -184,9 +192,8 @@ public class Controller implements Initializable{
 
     @FXML 
     private void toConfirmDelete(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml"))));
-        stage.show();
     }
 
     public void accountActivation() throws IOException{
@@ -272,13 +279,15 @@ public class Controller implements Initializable{
         }
     }
 
+
+    static Path sourcePath,targetPath;
+    
     @FXML
     private void singeFileChooser(ActionEvent event) {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
-                new ExtensionFilter("Imagini", "*.png", "*.jpg")
+                new ExtensionFilter("Imagini", "*.png")
         );
         fc.setInitialDirectory(new File("src/Database/PozeChitante")); 
         File selectedFile = fc.showOpenDialog(stage);
@@ -288,14 +297,14 @@ public class Controller implements Initializable{
                 String newFileName = "raport---"+acc.get(userIndex).getUsername()+"---"+acc.get(userIndex).getRaport()+".png";
 
                 
-                Path sourcePath = selectedFile.toPath();
-                Path targetPath = new File("src/Database/PozeChitante/" + newFileName).toPath();
-    
-                Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                sourcePath = selectedFile.toPath();
+                targetPath = new File("src/Database/PozeChitante/" + newFileName).toPath();
                 
+                fileInputMessage.setText(selectedFile.getName());
+                fileInputMessage.setTextFill(Color.BLACK);
 
-                fileInputMessage.setText("Fisier salvat cu succes");
-                fileInputMessage.setTextFill(Color.GREEN);
+                // TODO: sa implementez si pentru .jpg
+
 
                 
 
@@ -311,24 +320,36 @@ public class Controller implements Initializable{
     @FXML
     private void newReport() throws IOException{
         try {
-            FileWriter out = new FileWriter(new File("src\\Database\\Reports\\"+"raport---"+acc.get(userIndex).getUsername()+"---"+acc.get(userIndex).getRaport() + ".txt"));
-            out.write(reportName.getText() + " " + reportPrice.getText()+ " \n" + reportDesc.getText());
-            out.close();
-            acc.get(userIndex).setRaport(acc.get(userIndex).getRaport() + 1);
-            reportSuccess.setTextFill(Color.GREEN);
+            notnullError.setVisible(false);
+            if(reportName.getText().trim().isEmpty() || reportPrice.getText().trim().isEmpty() || reportDesc.getText().trim().isEmpty() || sourcePath == null){
+                notnullError.setVisible(true);
+            }
+            else{
+                if(Users.getBuget() - Integer.parseInt(reportPrice.getText()) < 0){
+                    priceError.setVisible(true);
+                }
+                else{
+                    FileWriter out = new FileWriter(new File("src\\Database\\Reports\\"+"raport---"+acc.get(userIndex).getUsername()+"---"+acc.get(userIndex).getRaport() + ".txt"));
+                    out.write(reportName.getText() + " " + reportPrice.getText()+ " \n" + reportDesc.getText());
+                    out.close();
+                    acc.get(userIndex).setRaport(acc.get(userIndex).getRaport() + 1);
+                    reportSuccess.setTextFill(Color.GREEN);
+                    
+                    Users.setBuget(Users.getBuget() - Integer.parseInt(reportPrice.getText()));
+                    
+                    FileWriter save = new FileWriter(new File("src\\Database\\buget.txt"));
+                    save.write(Users.getBuget() + " ");
+                    save.close();
+                    Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                    save();
+                }
+            }
 
-
-            Users.setBuget(Users.getBuget() - Integer.parseInt(reportPrice.getText()));
-            FileWriter save = new FileWriter(new File("src\\Database\\buget.txt"));
-            save.write(Users.getBuget() + " ");
-            save.close();
+        
         } catch (Exception e) {
             reportSuccess.setText("Eroare !!! (adresativa la un manager)");
             reportSuccess.setTextFill(Color.RED);
         }
-
-        save();
-
     }
 
     @FXML
@@ -349,6 +370,7 @@ public class Controller implements Initializable{
         changeConfirm.setVisible(true);
         changeError.setVisible(false);
         confirmationMessageForDez.setVisible(false);
+        deleteMessage.setVisible(false);
         dezactivationConfirmation.setVisible(false);
         notnullDezactivation.setVisible(false);
 
@@ -408,6 +430,7 @@ public class Controller implements Initializable{
         settingsTextFIeld1.setVisible(true);
         settingsTextFIeld2.setVisible(true);
         settingsTextFIeld3.setVisible(false);
+        deleteMessage.setVisible(false);
         changeConfirm.setVisible(true);
         changeError.setVisible(false);
         confirmationMessageForDez.setVisible(false);
@@ -470,6 +493,7 @@ public class Controller implements Initializable{
         settingsTextFIeld3.setVisible(true);
         settingsTextFIeld2.setVisible(true);
         settingsTextFIeld1.setVisible(false);
+        deleteMessage.setVisible(false);
         confirmationMessageForDez.setVisible(false);
         dezactivationConfirmation.setVisible(false);
         changeConfirm.setVisible(true);
@@ -514,6 +538,7 @@ public class Controller implements Initializable{
         settingsTextFIeld1.setVisible(false);
         settingsTextFIeld2.setVisible(false);
         settingsTextFIeld3.setVisible(false);
+        deleteMessage.setVisible(false);
         changeError.setVisible(false);
         changeConfirm.setVisible(true);
         confirmationMessageForDez.setVisible(true);
@@ -568,6 +593,23 @@ public class Controller implements Initializable{
 
     @FXML
     private void newDelete() throws IOException{
+        settingsTextFIeld1.clear();
+        settingsTextFIeld2.clear();
+        settingsTextFIeld3.clear();
+        settingsTextFIeld1.setVisible(false);
+        settingsTextFIeld2.setVisible(false);
+        settingsTextFIeld3.setVisible(false);
+        deleteMessage.setVisible(false);
+        changeError.setVisible(false);
+        changeConfirm.setVisible(false);
+        confirmationMessageForDez.setVisible(false);
+        dezactivationConfirmation.setVisible(false);
+        notnullDezactivation.setVisible(false);
+        
+        
+        
+        
+        
         boolean check = false;
         for(String user : deleteQueue){
             if(acc.get(userIndex).getUsername().equals(user)){
@@ -577,30 +619,20 @@ public class Controller implements Initializable{
         }
 
         if(!check){
+            deleteMessage.setText("Contul s-a înregistrat cu succes!\nAșteptați aprobarea unui\nmanager.");
+            deleteMessage.setTextFill(Color.DARKRED);
+            deleteMessage.setVisible(true);
             deleteQueue.add(acc.get(userIndex).getUsername());
             FileWriter saveQ = new FileWriter(new File("src\\Database\\deleteQueue.txt"),true);
             saveQ.write(acc.get(userIndex).getUsername() + "\n");
             saveQ.close();        
         }
         else{
-            System.out.println("CONTUL DEJA ESTE INREGISTRAT");
+            deleteMessage.setText("Contul este în lista de așteptare!");
+            deleteMessage.setTextFill(Color.RED);
+            deleteMessage.setVisible(true);
         }
-
     }
-    // TODO: de terminat buttonul pentru dezactivarea contlui
-
-    // @FXML
-    // private void userAccountDesactivation(ActionEvent event) throws IOException{
-    //     acc.get(userIndex).setActivation(false);
-    //     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    //     stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));;
-    //     try {
-    //         accountDezactivationMessage.setTextFill(Color.GREEN);
-            
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
-    // }
 
 
     private void save() throws IOException{
@@ -681,7 +713,7 @@ public class Controller implements Initializable{
                                 int reportIndex = reports.getSelectionModel().getSelectedIndex();
                                 Scanner in = new Scanner(new FileReader(new File("src\\Database\\Reports\\raport---"+acc.get(index).getUsername()+"---"+reportIndex+".txt")));
                                 label.setText(in.next());
-                                label1.setText(in.next());
+                                label1.setText(in.next() + " €");
 
 
                                 String c = "";
@@ -749,12 +781,14 @@ public class Controller implements Initializable{
                         }
                         in.close();
                         reportInfo.setText(a);
-                        reportInfo1.setText(b);
+                        reportInfo1.setText(b + " €");
                         reportInfo2.setText(c);
 
                         try {
                             reportPhoto.setImage(new Image("Database/PozeChitante/raport---"+acc.get(userIndex).getUsername()+"---"+index+".png"));
-                        } catch (Exception e) {}
+                        } catch (Exception e) {
+                            reportPhoto.setImage(null);
+                        }
 
 
                     } catch (FileNotFoundException e) {}
@@ -789,33 +823,11 @@ public class Controller implements Initializable{
                                         savedelQ.write(deleteQueue.get(j)+"\n");
                                     }
                                     
-                                    
                                     savedelQ.close();
-                                
-                                
                                     deleteCon.getItems().setAll(deleteQueue);
                                     
                                 }
                                 catch (IOException e1) {}
-
-                                    String[] items = new String[acc.size()];
-                                    for(int z=0; z < acc.size(); z++){
-                                        items[z] = acc.get(z).getUsername();
-                                    }
-                                    try {
-                                        for(int z=0; z < acc.size(); z++){
-                                            System.out.println(items[z]);
-                                        }
-                                        myListView.getSelectionModel().clearSelection();
-                                        myListView.getItems().setAll(items);
-                                        // TODO: trebuie sa dispara itemul si in myListView
-                                        // TODO: trebuie de adaugat un label pentru user atunci cand sterge un cont
-                                        // TODO: trebuie de rezolvat bugul cu butonul pentru crearea unui raport nou
-                                    } catch (Exception e2) {
-                                        System.out.println(e2);
-                                    }
-                                    
-
                                 break;
                             }
                         }
@@ -874,6 +886,28 @@ public class Controller implements Initializable{
                 button2.setStyle("-fx-background-color: transparent;");
             });
         } catch (Exception e) {}
+
+
+
+
+        try {
+            reportName.setOnMouseClicked(e -> {
+                notnullError.setVisible(false);
+                priceError.setVisible(false);
+                reportSuccess.setVisible(false);
+            });
+            reportPrice.setOnMouseClicked(e -> {
+                notnullError.setVisible(false);
+                priceError.setVisible(false);
+                reportSuccess.setVisible(false);    
+            });
+            reportDesc.setOnMouseClicked(e -> {
+                notnullError.setVisible(false);
+                priceError.setVisible(false);
+                reportSuccess.setVisible(false);
+            });
+        } catch (Exception e) {}
+
     }
 }
 
