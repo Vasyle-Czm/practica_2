@@ -55,7 +55,7 @@ public class Controller implements Initializable{
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc,button3; 
+    private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc,deleteAcc1,button3; 
     @FXML
     private ImageView imgview,reportPhoto;
     @FXML
@@ -858,6 +858,26 @@ public class Controller implements Initializable{
 
         ///////////////////////////////////////////////////////////
 
+        try {
+            deleteAcc1.setOnAction(e -> {
+                try {
+                    FileWriter savedelQ = new FileWriter(new File("src\\Database\\deleteQueue.txt"));
+                    deleteQueue.remove(deleteCon.getSelectionModel().getSelectedIndex());
+                    for(int j=0;j<deleteQueue.size();j++){
+                        savedelQ.write(deleteQueue.get(j)+"\n");
+                    }
+                    savedelQ.close();
+                    deleteCon.getSelectionModel().clearSelection();
+                    deleteCon.getItems().setAll(deleteQueue);
+                } catch (Exception error) {
+                    // TODO: handle exception
+                }
+    
+            });
+        } catch (Exception e) {}
+
+
+        ///////////////////////////////////////////////////////////
 
         try {
             appBuget.setText(Users.getBuget()+ " €");
