@@ -37,6 +37,12 @@ public class App extends Application{
 
 
 
+        Scanner min = new Scanner(new FileReader(new File("src\\Database\\managersInfo.txt")));
+        while(min.hasNext()){
+            Controller.manAcc.add(new Manageri(min.next(),min.next(), min.next(), min.next(), min.next(),min.next()));
+        }
+        min.close();
+
 
 
         primaryStage.setTitle("Consulting Company");

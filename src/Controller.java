@@ -55,7 +55,7 @@ public class Controller implements Initializable{
     @FXML
     private ChoiceBox<String> selectSubdivision = new ChoiceBox<>();
     @FXML
-    private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc; 
+    private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc,button3; 
     @FXML
     private ImageView imgview,reportPhoto;
     @FXML
@@ -63,6 +63,7 @@ public class Controller implements Initializable{
 
     protected static ArrayList<Users> acc = new ArrayList<>();
     protected static ArrayList<String> deleteQueue = new ArrayList<>();
+    protected static ArrayList<Manageri> manAcc = new ArrayList<>();
     private static int userIndex;
 
     int k = 0;
@@ -194,6 +195,12 @@ public class Controller implements Initializable{
     private void toConfirmDelete(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml"))));
+    }
+
+    @FXML
+    private void toNewManager(ActionEvent event) throws IOException{
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\newManager.fxml"))));
     }
 
     public void accountActivation() throws IOException{
@@ -884,6 +891,12 @@ public class Controller implements Initializable{
             });
             button2.setOnMouseExited(e -> {
                 button2.setStyle("-fx-background-color: transparent;");
+            });
+            button3.setOnMouseEntered(e -> {
+                button3.setStyle("-fx-background-color: gray;");
+            });
+            button3.setOnMouseExited(e -> {
+                button3.setStyle("-fx-background-color: transparent;");
             });
         } catch (Exception e) {}
 

@@ -15,11 +15,12 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
   <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button fx:id="button1" mnemonicParsing="false" onAction="#toLoginPage" style="-fx-background-color: transparent;" text="Delogare" />
+            <Button fx:id="button3" mnemonicParsing="false" onAction="#toNewManager" style="-fx-background-color: TRANSPARENT;" text="Manager nou" />
             <Button fx:id="button2" mnemonicParsing="false" onAction="#toConfirmDelete" style="-fx-background-color: TRANSPARENT;" text="Confirmare Stergere Conturi" />
          </children>
       </HBox>
