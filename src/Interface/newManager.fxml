@@ -9,20 +9,20 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewManagerController">
    <children>
-      <TextField fx:id="email" layoutX="226.0" layoutY="132.0" promptText="Email" />
-      <TextField fx:id="username" layoutX="226.0" layoutY="164.0" promptText="User name" />
-      <TextField fx:id="nume" layoutX="226.0" layoutY="200.0" promptText="Nume" />
-      <TextField fx:id="prenume" layoutX="226.0" layoutY="233.0" promptText="Prenume" />
-      <TextField fx:id="parola" layoutX="226.0" layoutY="266.0" promptText="Parola" />
-      <Label layoutX="190.0" layoutY="41.0" text="Manager Nou">
+      <TextField fx:id="email" layoutX="226.0" layoutY="132.0" promptText="Email" style="-fx-background-color: transparent;" />
+      <TextField fx:id="username" layoutX="226.0" layoutY="164.0" promptText="User name" style="-fx-background-color: transparent;" />
+      <TextField fx:id="nume" layoutX="226.0" layoutY="200.0" promptText="Nume" style="-fx-background-color: transparent;" />
+      <TextField fx:id="prenume" layoutX="226.0" layoutY="233.0" promptText="Prenume" style="-fx-background-color: transparent;" />
+      <TextField fx:id="parola" layoutX="226.0" layoutY="266.0" promptText="Parola" style="-fx-background-color: transparent;" />
+      <Label fx:id="mainLabel" alignment="CENTER" layoutY="41.0" prefHeight="53.0" prefWidth="600.0" text="Manager Nou" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Button layoutX="274.0" layoutY="332.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
+      <Button layoutX="271.0" layoutY="331.0" mnemonicParsing="false" onAction="#confirm" style="-fx-background-color: transparent;" text="Confirm" />
       <HBox layoutX="13.0" layoutY="11.0" prefHeight="53.0" prefWidth="587.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#backToManagerApp" text="Înapoi" />
+            <Button mnemonicParsing="false" onAction="#backToManagerApp" style="-fx-background-color: transparent;" text="Înapoi" />
          </children>
       </HBox>
       <Label fx:id="message" alignment="CENTER" layoutX="28.0" layoutY="303.0" prefHeight="17.0" prefWidth="545.0" text="label" textAlignment="CENTER" visible="false" />

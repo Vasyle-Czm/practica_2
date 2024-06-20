@@ -11,9 +11,9 @@
 
 <Pane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <Label layoutX="180.0" layoutY="28.0" text="Creare cont">
+      <Label fx:id="mainLabel" alignment="CENTER" layoutY="14.0" prefHeight="69.0" prefWidth="600.0" text="Creare cont" textAlignment="CENTER">
          <font>
-            <Font size="47.0" />
+            <Font size="40.0" />
          </font>
       </Label>
       <TextField fx:id="loginRegister" layoutX="233.0" layoutY="100.0" promptText="Email" style="-fx-background-color: transparent;" />

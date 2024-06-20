@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -86,8 +85,10 @@ public class Controller implements Initializable{
 
         if(check(loginLogin.getText(), passwordLogin.getText())){
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml")));
+            scene.getStylesheets().add(this.getClass().getResource("Style\\managerApp.css").toExternalForm());
+            stage.setScene(scene);     
             stage.setResizable(false);
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"))));     
         }
         else{
             for(int i=0;i<acc.size();i++){
@@ -132,7 +133,15 @@ public class Controller implements Initializable{
             }
         }
 
-        
+        for(int i=0;i<manAcc.size();i++){
+            if(manAcc.get(i).getEmail().equals(loginRegister.getText()) || manAcc.get(i).getUsername().equals(userName.getText())){
+                registerMessage.setTextFill(Color.RED);
+                registerMessage1.setTextFill(Color.TRANSPARENT);
+                k = true;
+                break;
+            }
+        }
+
         if(k == false){
             if(loginRegister.getText().isEmpty() || userName.getText().isEmpty() || firstName.getText().isEmpty() || lastName.getText().isEmpty() || passwordRegister.getText().isEmpty() || selectSubdivision.getSelectionModel().isEmpty()){
                 notnullMessage.setTextFill(Color.RED);
@@ -173,9 +182,10 @@ public class Controller implements Initializable{
     }
 
     public void backToManagerApp(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));    
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\managerApp.css").toExternalForm());
+        stage.setScene(scene);    
     }
 
     public void toNewReport(ActionEvent event) throws IOException{
@@ -188,7 +198,9 @@ public class Controller implements Initializable{
 
     public void toAppSettings(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\appSettings.fxml"))));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\appSettings.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\appSettings.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     @FXML
@@ -202,14 +214,20 @@ public class Controller implements Initializable{
     @FXML 
     private void toConfirmDelete(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml"))));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\deleteConfirmation.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\deleteConfirmation.css").toExternalForm());
+        stage.setScene(scene);     
     }
 
     @FXML
     private void toNewManager(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\newManager.fxml"))));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\newManager.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\newManager.css").toExternalForm());
+        stage.setScene(scene);     
     }
+
+    // TODO: css pentru functi cand contul se dezactiveaza !!!!
 
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
@@ -566,7 +584,9 @@ public class Controller implements Initializable{
             if(dezactivationConfirmation.getText().equals(acc.get(userIndex).getEmail())){
                 Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                 try {
-                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml"))));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\login.fxml")));
+                    scene.getStylesheets().add(this.getClass().getResource("Style\\login.css").toExternalForm());
+                    stage.setScene(scene);
     
 
 
@@ -581,9 +601,10 @@ public class Controller implements Initializable{
                         Label m = new Label("Contul a fost dezactivat cu succes !\nPentru reactivarea lui apropiațivă de un manager !");
                         m.setFont(new Font(20));
                         m.setAlignment(Pos.CENTER);
-                        m.setTextAlignment(TextAlignment.CENTER);
-                        
-                        mess.setScene(new Scene(new Pane(m),500,80));
+                        m.setTextAlignment(TextAlignment.CENTER);                        
+                        Scene scene1 = new Scene(new Pane(m),500,80);
+                        scene1.getStylesheets().add(this.getClass().getResource("Style\\dezactivationMessage.css").toExternalForm());
+                        mess.setScene(scene1);
                         mess.setResizable(false);
                         mess.show();
                     
@@ -698,7 +719,7 @@ public class Controller implements Initializable{
                     infoLabel.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:"+"\n"+"Subdiviziune:"+"\n"+"Statutul contului:");
                     String activ = acc.get(index).getActivation() ? "Activat" : "Dezactivat";
                     myLabel.setText(myListView.getSelectionModel().getSelectedItem() + "\n" + acc.get(index).getEmail() + "\n" +acc.get(index).getNume() + "\n" +acc.get(index).getPrenume() + "\n" + acc.get(index).getCreationDate() + "\n" + acc.get(index).getRaport()+ "\n" + sub[acc.get(index).getSubdivision()] + "\n" + activ);
-                    myLabel.setTextFill(Color.BLACK);
+                    myLabel.setTextFill(Color.WHITE);
                     imgview.setImage(null);
                     
                     label.setText(null);
@@ -889,48 +910,7 @@ public class Controller implements Initializable{
         try {
             settingsInfo1.setText("User name: "+"\n"+"Email: "+"\n"+"Nume: "+"\n"+"Prenume:"+"\n"+ "Data crearii contului:"+"\n"+"Numarul de rapoarte:");
         } catch (Exception e) {}
-
-
-        try {
-            userAccountDesactivation.setOnAction(e -> {
-                try {
-                    acc.get(userIndex).setActivation(false);
-                    Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("Interface\\login.fxml"));
-                    stage.setScene(new Scene(root));
-                    try {
-                        accountDezactivationMessage.setTextFill(Color.GREEN);
-                    } catch (Exception e2) {
-                        System.out.println(e2);
-                    }
-                } catch (IOException e1) {}
-        });
-        } catch (Exception e) {}
         
-        try {
-            button1.setOnMouseEntered(e -> {
-                button1.setStyle("-fx-background-color: gray;");
-            });
-            button2.setOnMouseEntered(e -> {
-                button2.setStyle("-fx-background-color: gray;");
-            });
-            button1.setOnMouseExited(e -> {
-                button1.setStyle("-fx-background-color: transparent;");
-            });
-            button2.setOnMouseExited(e -> {
-                button2.setStyle("-fx-background-color: transparent;");
-            });
-            button3.setOnMouseEntered(e -> {
-                button3.setStyle("-fx-background-color: gray;");
-            });
-            button3.setOnMouseExited(e -> {
-                button3.setStyle("-fx-background-color: transparent;");
-            });
-        } catch (Exception e) {}
-
-
-
-
         try {
             reportName.setOnMouseClicked(e -> {
                 notnullError.setVisible(false);

@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,9 +23,10 @@ public class NewManagerController implements Initializable{
     Label message;
 
     public void backToManagerApp(ActionEvent event) throws IOException{
-        Parent t1 = FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(t1));    
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\managerApp.fxml")));
+        scene.getStylesheets().add(this.getClass().getResource("Style\\managerApp.css").toExternalForm());
+        stage.setScene(scene);      
     }
 
     private void save() throws IOException{
