@@ -29,20 +29,14 @@
     -fx-border-width: 2px; 
 }
 
-/* styles.css */
 
-/* Stilizare pentru TextArea */
 .text-area {
-    -fx-background-color: #1e1e1e; /* culoare de fundal neagră */
-    -fx-text-fill: #1e1e1e; /* culoare text alb */
-    -fx-font-size: 14px; /* dimensiune text */
-    -fx-padding: 10px; /* padding interior */
-    -fx-border-color: #ffd700; /* culoare bordură */
-    -fx-border-width: 1px; /* grosime bordură */
-    -fx-border-radius: 5px; /* rază bordură */
+    -fx-background-color: #1e1e1e; 
+    -fx-text-fill: #1e1e1e; 
+    -fx-font-size: 14px; 
+    -fx-border-color: #ffd700; 
 }
 
-/* Stilizare pentru TextArea la hover */
 .text-area:hover {
-    -fx-background-color: #333333; /* culoare de fundal la hover */
+    -fx-background-color: #333333; 
 }

@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -24,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -40,7 +40,7 @@ import java.nio.file.StandardCopyOption;
 public class Controller implements Initializable{
     protected static String[] sub = {"Consultanță în cetățenii străine","Consultanță privind strategii","Consultanță în afaceri","Consultanță financiară","Consultanță IT","Consultanță în management","Consultanță în vânzări","Consultanță în marketing","Consultanță de brand","Servicii de consultanță în imobiliare"};
     @FXML
-    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation,reportDesc;
+    private TextField loginRegister,passwordRegister,loginLogin,passwordLogin,userName,firstName,lastName,reportName,reportPrice,buget,settingsTextFIeld1,settingsTextFIeld2,settingsTextFIeld3,dezactivationConfirmation;
     @FXML
     private Label registerMessage,registerMessage1,loginMessage,myLabel,infoLabel,activationMessage,notnullMessage,USER,fileInputMessage,reportSuccess,reportInfo,reportInfo1,reportInfo2,appControlPanelInfo,appControlPanelInfo1,bugetLabel,appInfo,appBuget,settingsInfo,settingsInfo1,changeError,label,label1,label2,labelSubdivision,accountDezactivationMessage,confirmationMessageForDez,notnullDezactivation,deleteMessage,priceError,notnullError;
     @FXML
@@ -56,8 +56,9 @@ public class Controller implements Initializable{
     @FXML
     private Button newReport,changeConfirm,userAccountDesactivation,button1,button2,deleteAcc,deleteAcc1,button3; 
     @FXML
-    private ImageView imgview,reportPhoto;
-    // TODO: DE FACUT BUTONUL PENTRU ELIBERAREA MEMORIEI CAND SE RESPINGE CEREREA SPRE STERGEREA CONTULUI
+    private ImageView imgview,reportPhoto,companyLogo;
+    @FXML
+    private TextArea reportDesc;
 
     protected static ArrayList<Users> acc = new ArrayList<>();
     protected static ArrayList<String> deleteQueue = new ArrayList<>();
@@ -227,8 +228,6 @@ public class Controller implements Initializable{
         stage.setScene(scene);     
     }
 
-    // TODO: css pentru functi cand contul se dezactiveaza !!!!
-
     public void accountActivation() throws IOException{
         int index = myListView.getSelectionModel().getSelectedIndex();
         
@@ -334,13 +333,7 @@ public class Controller implements Initializable{
                 targetPath = new File("src/Database/PozeChitante/" + newFileName).toPath();
                 
                 fileInputMessage.setText(selectedFile.getName());
-                fileInputMessage.setTextFill(Color.BLACK);
-
-                // TODO: sa implementez si pentru .jpg
-
-
-                
-
+                fileInputMessage.setTextFill(Color.WHITE);
             } catch (Exception ex) {
                 fileInputMessage.setText("EROARE !!! Adresativă la un manager !");
             }
@@ -351,7 +344,7 @@ public class Controller implements Initializable{
     }
     
     @FXML
-    private void newReport() throws IOException{
+    private void newReport(ActionEvent event) throws IOException{
         try {
             notnullError.setVisible(false);
             if(reportName.getText().trim().isEmpty() || reportPrice.getText().trim().isEmpty() || reportDesc.getText().trim().isEmpty() || sourcePath == null){
@@ -375,6 +368,12 @@ public class Controller implements Initializable{
                     save.close();
                     Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
                     save();
+
+
+                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Interface\\app.fxml")));
+                    scene.getStylesheets().add(this.getClass().getResource("Style\\app.css").toExternalForm());
+                    stage.setScene(scene);
                 }
             }
 
@@ -887,9 +886,7 @@ public class Controller implements Initializable{
                     savedelQ.close();
                     deleteCon.getSelectionModel().clearSelection();
                     deleteCon.getItems().setAll(deleteQueue);
-                } catch (Exception error) {
-                    // TODO: handle exception
-                }
+                } catch (Exception error) {}
     
             });
         } catch (Exception e) {}
@@ -927,6 +924,10 @@ public class Controller implements Initializable{
                 priceError.setVisible(false);
                 reportSuccess.setVisible(false);
             });
+        } catch (Exception e) {}
+
+        try {
+            companyLogo.setImage(new Image("Database/icon.png"));
         } catch (Exception e) {}
 
     }

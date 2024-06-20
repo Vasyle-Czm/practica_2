@@ -1,47 +1,6 @@
-33 343 
-sdgsdrg
-as
-dfgdfgd
-gabrieladf
-gh
-dfgdfgdfhfg
-hfg
-hfgh
-fg
-jh
-false
-sdgsdrgfg
-sdgsdrgdf
-gabrieladffg
-fg
-END
-as
-dfgdfgd
-gabrieladf
-gh
-dfgdfgdfhfg
-hfg
-hfgh
-fg
-jh
-false
-sdgsdrgfg
-sdgsdrgdf
-gabrieladffg
-fg
-END
-as
-dfgdfgd
-gabrieladf
-gh
-dfgdfgdfhfg
-hfg
-hfgh
-fg
-jh
-false
-sdgsdrgfg
-sdgsdrgdf
-gabrieladffg
-fg
-END
+Consumabile 85 
+Descriere: Achiziții pentru nevoi de birou.
+
+Detalii achiziție:
+Categorie cheltuieli: Consumabile birou
+Data: 12 iunie 2024

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -40,6 +41,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
+            <ImageView fx:id="companyLogo" fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true" />
          </children>
     </AnchorPane>
   </children>
