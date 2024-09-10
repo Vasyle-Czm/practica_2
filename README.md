@@ -1,4 +1,8 @@
-Sarcina 2: Scrieți un program Java care modelează următoarea activitate:
+Codul sursă poate fi găsit în folder-ul 'src', iar rezultatele excuției sunt în fișierul 'Raport - Practica de Instruire.pdf'
+
+
+
+Sarcina: Scrieți un program Java care modelează următoarea activitate:
 
 Creați un produs program pentru evidența activității a unei companii de consultanță. Compania este împărțită în subdiviziuni. Fiecare subdiviziune are o denumire, adresă, telefon, un singur angajat. În companie angajații pot face mici achiziții de materiale consumabile pentru birou pentru necesitățile companiei (hârtie, caiete, pixuri, creioane și alte produse de birotică). Bonul de plată pentru achizițiile făcute este prezentat în contabilitate. Achiziții pot fi făcute conform categoriilor de cheltuieli prevăzute în companie. Categoriile de cheltuieli sunt caracterizate prin denumire, descriere, suma maximă pe lună. Pentru fiecare achiziție angajatul face un raport în care indică categoria de cheltuieli, data, suma, subdiviziunea. Produsul program trebuie să asigure evidența acestor achiziții atât conform subdiviziunilor, cât și conform angajaților, care au făcut achizițiile. Atât pentru subdiviziuni cât și pentru angajați sunt stabilite sume maximale lunare, care pot fi cheltuite în aceste scopuri.
 
